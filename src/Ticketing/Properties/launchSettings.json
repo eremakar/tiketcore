@@ -1,0 +1,12 @@
+{
+"profiles": {
+  "Ticketing": {
+    "commandName": "Project",
+    "launchBrowser": true,
+    "environmentVariables": {
+      "ASPNETCORE_ENVIRONMENT": "Development"
+    },
+    "applicationUrl": "http://10.100.49.9:20088"
+  }
+}
+}

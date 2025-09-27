@@ -1,0 +1,1232 @@
+﻿@host = http://localhost:20088/api/v1/
+### health
+GET {{host}}health
+
+### Get JWT access token by password and user login
+# @name loginReq
+POST {{host}}authenticate
+Content-Type: application/json
+
+{
+    "username":"user",
+    "password":"pass"
+}
+
+### Get the list of User, using advanced search
+POST {{host}}users/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a User
+POST {{host}}users
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "userName": "abc",
+    "passwordHash": "abc",
+    "isActive": false,
+    "protectFromBruteforceAttempts": 1,
+    "fullName": "abc",
+    "positionName": "abc",
+    "state": 1,
+    "registrationToken": "abc",
+    "blockExpiration": "12.03.2021 00:00",
+    "pushToken": "abc",
+    "signalrToken": "abc",
+    "pinCode": "abc",
+    "pinCodeExpiration": "12.03.2021 00:00",
+    "avatar": null,
+    "failedLoginCount": 1,
+    "roleId": 1,
+}
+
+### Edit a User
+PUT {{host}}users
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "userName": "abc",
+    "passwordHash": "abc",
+    "isActive": false,
+    "protectFromBruteforceAttempts": 1,
+    "fullName": "abc",
+    "positionName": "abc",
+    "state": 1,
+    "registrationToken": "abc",
+    "blockExpiration": "12.03.2021 00:00",
+    "pushToken": "abc",
+    "signalrToken": "abc",
+    "pinCode": "abc",
+    "pinCodeExpiration": "12.03.2021 00:00",
+    "avatar": null,
+    "failedLoginCount": 1,
+    "roleId": 1,
+}
+
+### Delete a User
+DELETE {{host}}users/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Role, using advanced search
+POST {{host}}roles/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Role
+POST {{host}}roles
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "name": "abc",
+    "code": "abc",
+}
+
+### Edit a Role
+PUT {{host}}roles
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "abc",
+    "code": "abc",
+}
+
+### Delete a Role
+DELETE {{host}}roles/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of UserRole, using advanced search
+POST {{host}}userRoles/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a UserRole
+POST {{host}}userRoles
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "userId": 1,
+    "roleId": 1,
+}
+
+### Edit a UserRole
+PUT {{host}}userRoles
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "userId": 1,
+    "roleId": 1,
+}
+
+### Delete a UserRole
+DELETE {{host}}userRoles/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Route, using advanced search
+POST {{host}}routes/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Route
+POST {{host}}routes
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "trainId": 1,
+}
+
+### Edit a Route
+PUT {{host}}routes
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "trainId": 1,
+}
+
+### Delete a Route
+DELETE {{host}}routes/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Station, using advanced search
+POST {{host}}stations/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Station
+POST {{host}}stations
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "name": "abc",
+    "code": "abc",
+    "shortName": "abc",
+    "shortNameLatin": "abc",
+    "depots": null,
+    "isCity": false,
+    "cityCode": "abc",
+    "isSalePoint": false,
+}
+
+### Edit a Station
+PUT {{host}}stations
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "abc",
+    "code": "abc",
+    "shortName": "abc",
+    "shortNameLatin": "abc",
+    "depots": null,
+    "isCity": false,
+    "cityCode": "abc",
+    "isSalePoint": false,
+}
+
+### Delete a Station
+DELETE {{host}}stations/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Railway, using advanced search
+POST {{host}}railwaies/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Railway
+POST {{host}}railwaies
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "name": "abc",
+    "code": "abc",
+    "shortCode": "abc",
+    "timeDifferenceFromAdministration": 1,
+    "type": "abc",
+}
+
+### Edit a Railway
+PUT {{host}}railwaies
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "abc",
+    "code": "abc",
+    "shortCode": "abc",
+    "timeDifferenceFromAdministration": 1,
+    "type": "abc",
+}
+
+### Delete a Railway
+DELETE {{host}}railwaies/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of RailwayStation, using advanced search
+POST {{host}}railwayStations/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a RailwayStation
+POST {{host}}railwayStations
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "stationId": 1,
+    "railwayId": 1,
+}
+
+### Edit a RailwayStation
+PUT {{host}}railwayStations
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "stationId": 1,
+    "railwayId": 1,
+}
+
+### Delete a RailwayStation
+DELETE {{host}}railwayStations/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Depot, using advanced search
+POST {{host}}depots/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Depot
+POST {{host}}depots
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "name": "abc",
+    "stationId": 1,
+}
+
+### Edit a Depot
+PUT {{host}}depots
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "abc",
+    "stationId": 1,
+}
+
+### Delete a Depot
+DELETE {{host}}depots/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of RouteStation, using advanced search
+POST {{host}}routeStations/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a RouteStation
+POST {{host}}routeStations
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "order": 1,
+    "arrival": "12.03.2021 00:00",
+    "stop": false,
+    "departure": "12.03.2021 00:00",
+    "stationId": 1,
+    "routeId": 1,
+}
+
+### Edit a RouteStation
+PUT {{host}}routeStations
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "order": 1,
+    "arrival": "12.03.2021 00:00",
+    "stop": false,
+    "departure": "12.03.2021 00:00",
+    "stationId": 1,
+    "routeId": 1,
+}
+
+### Delete a RouteStation
+DELETE {{host}}routeStations/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of TimeSchedule, using advanced search
+POST {{host}}timeSchedules/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a TimeSchedule
+POST {{host}}timeSchedules
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "arrival": "12.03.2021 00:00",
+    "stop": 1,
+    "departure": "12.03.2021 00:00",
+    "trainId": 1,
+    "routeStationId": 1,
+}
+
+### Edit a TimeSchedule
+PUT {{host}}timeSchedules
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "arrival": "12.03.2021 00:00",
+    "stop": 1,
+    "departure": "12.03.2021 00:00",
+    "trainId": 1,
+    "routeStationId": 1,
+}
+
+### Delete a TimeSchedule
+DELETE {{host}}timeSchedules/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Train, using advanced search
+POST {{host}}trains/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Train
+POST {{host}}trains
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "name": "abc",
+    "type": 1,
+    "zoneType": 1,
+    "fromId": 1,
+    "toId": 1,
+    "routeId": 1,
+}
+
+### Edit a Train
+PUT {{host}}trains
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "abc",
+    "type": 1,
+    "zoneType": 1,
+    "fromId": 1,
+    "toId": 1,
+    "routeId": 1,
+}
+
+### Delete a Train
+DELETE {{host}}trains/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of TrainSchedule, using advanced search
+POST {{host}}trainSchedules/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a TrainSchedule
+POST {{host}}trainSchedules
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "date": "12.03.2021 00:00",
+    "active": false,
+    "trainId": 1,
+}
+
+### Edit a TrainSchedule
+PUT {{host}}trainSchedules
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "date": "12.03.2021 00:00",
+    "active": false,
+    "trainId": 1,
+}
+
+### Delete a TrainSchedule
+DELETE {{host}}trainSchedules/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of TrainWagon, using advanced search
+POST {{host}}trainWagons/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a TrainWagon
+POST {{host}}trainWagons
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "number": "abc",
+    "trainScheduleId": 1,
+    "wagonId": 1,
+}
+
+### Edit a TrainWagon
+PUT {{host}}trainWagons
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "number": "abc",
+    "trainScheduleId": 1,
+    "wagonId": 1,
+}
+
+### Delete a TrainWagon
+DELETE {{host}}trainWagons/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Wagon, using advanced search
+POST {{host}}wagons/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Wagon
+POST {{host}}wagons
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "type": "abc",
+    "seatCount": 1,
+    "pictureS3": null,
+    "class": "abc",
+}
+
+### Edit a Wagon
+PUT {{host}}wagons
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "type": "abc",
+    "seatCount": 1,
+    "pictureS3": null,
+    "class": "abc",
+}
+
+### Delete a Wagon
+DELETE {{host}}wagons/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Seat, using advanced search
+POST {{host}}seats/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Seat
+POST {{host}}seats
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "number": "abc",
+    "type": 1,
+    "class": 1,
+    "wagonId": 1,
+}
+
+### Edit a Seat
+PUT {{host}}seats
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "number": "abc",
+    "type": 1,
+    "class": 1,
+    "wagonId": 1,
+}
+
+### Delete a Seat
+DELETE {{host}}seats/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of SeatSegment, using advanced search
+POST {{host}}seatSegments/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a SeatSegment
+POST {{host}}seatSegments
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "seatId": 1,
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "trainScheduleId": 1,
+    "ticketId": 1,
+    "seatReservationId": 1,
+}
+
+### Edit a SeatSegment
+PUT {{host}}seatSegments
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "seatId": 1,
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "trainScheduleId": 1,
+    "ticketId": 1,
+    "seatReservationId": 1,
+}
+
+### Delete a SeatSegment
+DELETE {{host}}seatSegments/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of SeatCountSegment, using advanced search
+POST {{host}}seatCountSegments/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a SeatCountSegment
+POST {{host}}seatCountSegments
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "seatCount": 1,
+    "freeCount": 1,
+    "tickets": null,
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "trainScheduleId": 1,
+}
+
+### Edit a SeatCountSegment
+PUT {{host}}seatCountSegments
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "seatCount": 1,
+    "freeCount": 1,
+    "tickets": null,
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "trainScheduleId": 1,
+}
+
+### Delete a SeatCountSegment
+DELETE {{host}}seatCountSegments/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of SeatCountReservation, using advanced search
+POST {{host}}seatCountReservations/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a SeatCountReservation
+POST {{host}}seatCountReservations
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "number": "abc",
+    "dateTime": "12.03.2021 00:00",
+    "total": "abc",
+    "seatCount": 1,
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "trainScheduleId": 1,
+}
+
+### Edit a SeatCountReservation
+PUT {{host}}seatCountReservations
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "number": "abc",
+    "dateTime": "12.03.2021 00:00",
+    "total": "abc",
+    "seatCount": 1,
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "trainScheduleId": 1,
+}
+
+### Delete a SeatCountReservation
+DELETE {{host}}seatCountReservations/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Connection, using advanced search
+POST {{host}}connections/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Connection
+POST {{host}}connections
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "name": "abc",
+    "distanceKm": 1.0,
+    "fromId": 1,
+    "toId": 1,
+}
+
+### Edit a Connection
+PUT {{host}}connections
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "abc",
+    "distanceKm": 1.0,
+    "fromId": 1,
+    "toId": 1,
+}
+
+### Delete a Connection
+DELETE {{host}}connections/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Segment, using advanced search
+POST {{host}}segments/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Segment
+POST {{host}}segments
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "seatId": 1,
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "trainScheduleId": 1,
+    "ticketId": 1,
+    "reservationId": 1,
+}
+
+### Edit a Segment
+PUT {{host}}segments
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "seatId": 1,
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "trainScheduleId": 1,
+    "ticketId": 1,
+    "reservationId": 1,
+}
+
+### Delete a Segment
+DELETE {{host}}segments/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of SeatReservation, using advanced search
+POST {{host}}seatReservations/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a SeatReservation
+POST {{host}}seatReservations
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "number": "abc",
+    "date": "12.03.2021 00:00",
+    "total": "abc",
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "seatId": 1,
+    "trainScheduleId": 1,
+}
+
+### Edit a SeatReservation
+PUT {{host}}seatReservations
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "number": "abc",
+    "date": "12.03.2021 00:00",
+    "total": "abc",
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "seatId": 1,
+    "trainScheduleId": 1,
+}
+
+### Delete a SeatReservation
+DELETE {{host}}seatReservations/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+
+### Get the list of Ticket, using advanced search
+POST {{host}}tickets/search
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "paging": {
+        "skip": 0,
+        "take": 10,
+        "returnCount": true
+    },
+    "sort": {
+        "id": {
+            "operator": "asc",
+            "ordinal": 0,
+        },
+    },
+}
+
+### Add a Ticket
+POST {{host}}tickets
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "number": "abc",
+    "date": "12.03.2021 00:00",
+    "total": "abc",
+    "isSeat": false,
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "seatId": 1,
+    "trainScheduleId": 1,
+}
+
+### Edit a Ticket
+PUT {{host}}tickets
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "number": "abc",
+    "date": "12.03.2021 00:00",
+    "total": "abc",
+    "isSeat": false,
+    "fromId": 1,
+    "toId": 1,
+    "trainId": 1,
+    "wagonId": 1,
+    "seatId": 1,
+    "trainScheduleId": 1,
+}
+
+### Delete a Ticket
+DELETE {{host}}tickets/1
+Authorization: Bearer {{loginReq.response.body.token}}
+Content-Type: application/json
+
+{
+}
+

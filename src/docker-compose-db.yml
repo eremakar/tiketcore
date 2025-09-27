@@ -1,0 +1,23 @@
+﻿version: '3.7'
+
+services:
+  ticketing_db:
+    container_name: ticketing_db
+    image: postgres
+    ports:
+      - 54331:5432:5432
+    networks:
+      - private-network
+    environment:
+      POSTGRES_USER: 'pguser'
+      POSTGRES_PASSWORD: 'pguserpass'
+      POSTGRES_DB: 'ticketing_db'
+
+volumes:
+  pgdata:
+    name: ticketing_db
+
+networks:
+  private-network:
+    external:
+      name: ktj2

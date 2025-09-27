@@ -1,0 +1,32 @@
+﻿[
+    {
+        "Id" : "1",
+        "Name" : "Создан",
+        "Code" : "created"
+    },
+    {
+        "Id" : "2",
+        "Name" : "Оплачен",
+        "Code" : "payed"
+    },
+    {
+        "Id" : "3",
+        "Name" : "Завершен",
+        "Code" : "completed"
+    },
+    {
+        "Id" : "4",
+        "Name" : "Отклонен",
+        "Code" : "rejected"
+    },
+    {
+        "Id" : "5",
+        "Name" : "Возвращен",
+        "Code" : "returned"
+    },
+    {
+        "Id" : "6",
+        "Name" : "Деньги возвращены",
+        "Code" : "moneyReturned"
+    }
+]
