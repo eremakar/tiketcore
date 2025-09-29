@@ -10,6 +10,7 @@ namespace Ticketing.Models.Queries.SeatSegments
     {
         public FilterOperand<long>? Id { get; set; }
         public FilterOperand<double>? Price { get; set; }
+        public FilterOperand<DateTime>? Departure { get; set; }
         public FilterOperand<long?>? SeatId { get; set; }
         public FilterOperand<long?>? FromId { get; set; }
         public FilterOperand<long?>? ToId { get; set; }

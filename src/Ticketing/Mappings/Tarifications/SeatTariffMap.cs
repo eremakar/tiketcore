@@ -28,27 +28,19 @@ namespace Ticketing.Mappings.Tarifications
             if (options.MapProperties)
             {
                 result.Name = source.Name;
-                result.Price = source.Price;
-                result.BaseFareId = source.BaseFareId;
                 result.TrainId = source.TrainId;
+                result.BaseFareId = source.BaseFareId;
                 result.TrainCategoryId = source.TrainCategoryId;
-                result.WagonClassId = source.WagonClassId;
-                result.SeasonId = source.SeasonId;
-                result.SeatTypeId = source.SeatTypeId;
-                result.ConnectionId = source.ConnectionId;
             }
             if (options.MapObjects)
             {
-                result.BaseFare = mapContext.BaseFareMap.Map(source.BaseFare, options);
                 result.Train = mapContext.TrainMap.Map(source.Train, options);
+                result.BaseFare = mapContext.BaseFareMap.Map(source.BaseFare, options);
                 result.TrainCategory = mapContext.TrainCategoryMap.Map(source.TrainCategory, options);
-                result.WagonClass = mapContext.WagonClassMap.Map(source.WagonClass, options);
-                result.Season = mapContext.SeasonMap.Map(source.Season, options);
-                result.SeatType = mapContext.SeatTypeMap.Map(source.SeatType, options);
-                result.Connection = mapContext.ConnectionMap.Map(source.Connection, options);
             }
             if (options.MapCollections)
             {
+                result.Items = mapContext.SeatTariffItemMap.Map(source.Items, options);
             }
 
             return result;
@@ -66,27 +58,19 @@ namespace Ticketing.Mappings.Tarifications
             if (options.MapProperties)
             {
                 result.Name = source.Name;
-                result.Price = source.Price;
-                result.BaseFareId = source.BaseFareId;
                 result.TrainId = source.TrainId;
+                result.BaseFareId = source.BaseFareId;
                 result.TrainCategoryId = source.TrainCategoryId;
-                result.WagonClassId = source.WagonClassId;
-                result.SeasonId = source.SeasonId;
-                result.SeatTypeId = source.SeatTypeId;
-                result.ConnectionId = source.ConnectionId;
             }
             if (options.MapObjects)
             {
-                result.BaseFare = mapContext.BaseFareMap.ReverseMap(source.BaseFare, options);
                 result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
+                result.BaseFare = mapContext.BaseFareMap.ReverseMap(source.BaseFare, options);
                 result.TrainCategory = mapContext.TrainCategoryMap.ReverseMap(source.TrainCategory, options);
-                result.WagonClass = mapContext.WagonClassMap.ReverseMap(source.WagonClass, options);
-                result.Season = mapContext.SeasonMap.ReverseMap(source.Season, options);
-                result.SeatType = mapContext.SeatTypeMap.ReverseMap(source.SeatType, options);
-                result.Connection = mapContext.ConnectionMap.ReverseMap(source.Connection, options);
             }
             if (options.MapCollections)
             {
+                result.Items = mapContext.SeatTariffItemMap.ReverseMap(source.Items, options);
             }
 
             return result;
@@ -103,14 +87,9 @@ namespace Ticketing.Mappings.Tarifications
             if (options.MapProperties)
             {
                 destination.Name = source.Name;
-                destination.Price = source.Price;
-                destination.BaseFareId = source.BaseFareId;
                 destination.TrainId = source.TrainId;
+                destination.BaseFareId = source.BaseFareId;
                 destination.TrainCategoryId = source.TrainCategoryId;
-                destination.WagonClassId = source.WagonClassId;
-                destination.SeasonId = source.SeasonId;
-                destination.SeatTypeId = source.SeatTypeId;
-                destination.ConnectionId = source.ConnectionId;
             }
             if (options.MapObjects)
             {

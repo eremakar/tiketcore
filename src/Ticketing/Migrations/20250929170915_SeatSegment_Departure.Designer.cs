@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Ticketing.Data.TicketDb.DatabaseContext;
@@ -11,9 +12,10 @@ using Ticketing.Data.TicketDb.DatabaseContext;
 namespace Ticketing.Migrations
 {
     [DbContext(typeof(TicketDbContext))]
-    partial class TicketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250929170915_SeatSegment_Departure")]
+    partial class SeatSegment_Departure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -598,8 +600,20 @@ namespace Ticketing.Migrations
                     b.Property<long?>("BaseFareId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("ConnectionId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<long?>("SeasonId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SeatTypeId")
+                        .HasColumnType("bigint");
 
                     b.Property<long?>("TrainCategoryId")
                         .HasColumnType("bigint");
@@ -607,13 +621,24 @@ namespace Ticketing.Migrations
                     b.Property<long?>("TrainId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("WagonClassId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BaseFareId");
 
+                    b.HasIndex("ConnectionId");
+
+                    b.HasIndex("SeasonId");
+
+                    b.HasIndex("SeatTypeId");
+
                     b.HasIndex("TrainCategoryId");
 
                     b.HasIndex("TrainId");
+
+                    b.HasIndex("WagonClassId");
 
                     b.ToTable("SeatTariffs");
                 });
@@ -673,55 +698,6 @@ namespace Ticketing.Migrations
                     b.HasIndex("WagonClassId");
 
                     b.ToTable("SeatTariffHistories");
-                });
-
-            modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.Tarifications.SeatTariffItem", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<double>("Distance")
-                        .HasColumnType("double precision");
-
-                    b.Property<long?>("FromId")
-                        .HasColumnType("bigint");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("double precision");
-
-                    b.Property<long?>("SeasonId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("SeatTariffId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("SeatTypeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("ToId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("WagonClassId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FromId");
-
-                    b.HasIndex("SeasonId");
-
-                    b.HasIndex("SeatTariffId");
-
-                    b.HasIndex("SeatTypeId");
-
-                    b.HasIndex("ToId");
-
-                    b.HasIndex("WagonClassId");
-
-                    b.ToTable("SeatTariffItems");
                 });
 
             modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.Tarifications.TrainCategory", b =>
@@ -1438,6 +1414,18 @@ namespace Ticketing.Migrations
                         .WithMany()
                         .HasForeignKey("BaseFareId");
 
+                    b.HasOne("Ticketing.Data.TicketDb.Entities.Connection", "Connection")
+                        .WithMany()
+                        .HasForeignKey("ConnectionId");
+
+                    b.HasOne("Ticketing.Data.TicketDb.Entities.Tarifications.Season", "Season")
+                        .WithMany()
+                        .HasForeignKey("SeasonId");
+
+                    b.HasOne("Ticketing.Data.TicketDb.Entities.SeatType", "SeatType")
+                        .WithMany()
+                        .HasForeignKey("SeatTypeId");
+
                     b.HasOne("Ticketing.Data.TicketDb.Entities.Tarifications.TrainCategory", "TrainCategory")
                         .WithMany()
                         .HasForeignKey("TrainCategoryId");
@@ -1446,11 +1434,23 @@ namespace Ticketing.Migrations
                         .WithMany()
                         .HasForeignKey("TrainId");
 
+                    b.HasOne("Ticketing.Data.TicketDb.Entities.Tarifications.WagonClass", "WagonClass")
+                        .WithMany()
+                        .HasForeignKey("WagonClassId");
+
                     b.Navigation("BaseFare");
+
+                    b.Navigation("Connection");
+
+                    b.Navigation("Season");
+
+                    b.Navigation("SeatType");
 
                     b.Navigation("Train");
 
                     b.Navigation("TrainCategory");
+
+                    b.Navigation("WagonClass");
                 });
 
             modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.Tarifications.SeatTariffHistory", b =>
@@ -1494,45 +1494,6 @@ namespace Ticketing.Migrations
                     b.Navigation("Train");
 
                     b.Navigation("TrainCategory");
-
-                    b.Navigation("WagonClass");
-                });
-
-            modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.Tarifications.SeatTariffItem", b =>
-                {
-                    b.HasOne("Ticketing.Data.TicketDb.Entities.Station", "From")
-                        .WithMany()
-                        .HasForeignKey("FromId");
-
-                    b.HasOne("Ticketing.Data.TicketDb.Entities.Tarifications.Season", "Season")
-                        .WithMany()
-                        .HasForeignKey("SeasonId");
-
-                    b.HasOne("Ticketing.Data.TicketDb.Entities.Tarifications.SeatTariff", "SeatTariff")
-                        .WithMany("Items")
-                        .HasForeignKey("SeatTariffId");
-
-                    b.HasOne("Ticketing.Data.TicketDb.Entities.SeatType", "SeatType")
-                        .WithMany()
-                        .HasForeignKey("SeatTypeId");
-
-                    b.HasOne("Ticketing.Data.TicketDb.Entities.Station", "To")
-                        .WithMany()
-                        .HasForeignKey("ToId");
-
-                    b.HasOne("Ticketing.Data.TicketDb.Entities.Tarifications.WagonClass", "WagonClass")
-                        .WithMany()
-                        .HasForeignKey("WagonClassId");
-
-                    b.Navigation("From");
-
-                    b.Navigation("Season");
-
-                    b.Navigation("SeatTariff");
-
-                    b.Navigation("SeatType");
-
-                    b.Navigation("To");
 
                     b.Navigation("WagonClass");
                 });
@@ -1727,11 +1688,6 @@ namespace Ticketing.Migrations
             modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.SeatReservation", b =>
                 {
                     b.Navigation("Segments");
-                });
-
-            modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.Tarifications.SeatTariff", b =>
-                {
-                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.TrainWagon", b =>

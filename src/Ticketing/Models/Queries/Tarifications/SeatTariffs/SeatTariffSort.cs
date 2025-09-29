@@ -10,16 +10,8 @@ namespace Ticketing.Models.Queries.Tarifications.SeatTariffs
     {
         public SortOperand? Id { get; set; }
         public SortOperand? Name { get; set; }
-        public SortOperand? Price { get; set; }
-        public SortOperand? BaseFareId { get; set; }
         public SortOperand? TrainId { get; set; }
+        public SortOperand? BaseFareId { get; set; }
         public SortOperand? TrainCategoryId { get; set; }
-        public SortOperand? WagonClassId { get; set; }
-        public SortOperand? SeasonId { get; set; }
-        public SortOperand? SeatTypeId { get; set; }
-        /// <summary>
-        /// соединение станций
-        /// </summary>
-        public SortOperand? ConnectionId { get; set; }
     }
 }

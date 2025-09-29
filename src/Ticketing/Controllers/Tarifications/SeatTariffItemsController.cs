@@ -4,7 +4,7 @@ using Ticketing.Data.TicketDb.DatabaseContext;
 using Ticketing.Data.TicketDb.Entities.Tarifications;
 using Ticketing.Mappings.Tarifications;
 using Ticketing.Models.Dtos.Tarifications;
-using Ticketing.Models.Queries.Tarifications.SeatTariffs;
+using Ticketing.Models.Queries.Tarifications.SeatTariffItems;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,68 +15,72 @@ using Microsoft.EntityFrameworkCore;
 namespace Ticketing.Controllers.Tarifications
 {
     /// <summary>
-    /// Тариф места в вагоне
+    /// Элемент тарифа места
     /// </summary>
-    [Route("/api/v1/seatTariffs")]
+    [Route("/api/v1/seatTariffItems")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "SuperAdministrator,Administrator")]
-    public partial class SeatTariffsController : RestControllerBase2<SeatTariff, long, SeatTariffDto, SeatTariffQuery, SeatTariffMap>
+    public partial class SeatTariffItemsController : RestControllerBase2<SeatTariffItem, long, SeatTariffItemDto, SeatTariffItemQuery, SeatTariffItemMap>
     {
-        public SeatTariffsController(ILogger<RestServiceBase<SeatTariff, long>> logger,
+        public SeatTariffItemsController(ILogger<RestServiceBase<SeatTariffItem, long>> logger,
             IDapperDbContext restDapperDb,
             TicketDbContext restDb,
-            SeatTariffMap seatTariffMap)
+            SeatTariffItemMap seatTariffItemMap)
             : base(logger,
                 restDapperDb,
                 restDb,
-                "SeatTariffs",
-                seatTariffMap)
+                "SeatTariffItems",
+                seatTariffItemMap)
         {
         }
 
         /// <summary>
-        /// Search of SeatTariff using given query
+        /// Search of SeatTariffItem using given query
         /// </summary>
         /// <remarks>
         /// </remarks>
-        /// <response code="200">List of seatTariffs</response>
+        /// <response code="200">List of seatTariffItems</response>
         /// <response code="400">Validation errors detected, operation denied</response>
         /// <response code="401">Unauthorized request</response>
-        [Route("/api/v1/seatTariffs/search")]
+        [Route("/api/v1/seatTariffItems/search")]
         [HttpPost]
-        [ProducesResponseType(typeof(PagedList<SeatTariffDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PagedList<SeatTariffItemDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces(MediaTypeNames.Application.Json)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public override async Task<PagedList<SeatTariffDto>> SearchAsync([FromBody] SeatTariffQuery query)
+        public override async Task<PagedList<SeatTariffItemDto>> SearchAsync([FromBody] SeatTariffItemQuery query)
         {
             return await SearchUsingEfAsync(query, _ => _.
-                Include(_ => _.Train).
-                Include(_ => _.BaseFare).
-                Include(_ => _.TrainCategory).
-                Include(_ => _.Items));
+                Include(_ => _.WagonClass).
+                Include(_ => _.Season).
+                Include(_ => _.SeatType).
+                Include(_ => _.From).
+                Include(_ => _.To).
+                Include(_ => _.SeatTariff));
         }
 
         /// <summary>
-        /// Get the seatTariff by id
+        /// Get the seatTariffItem by id
         /// </summary>
         /// <remarks>
         /// </remarks>
-        /// <response code="200">SeatTariff data</response>
+        /// <response code="200">SeatTariffItem data</response>
         /// <response code="401">Unauthorized request</response>
-        [Route("/api/v1/seatTariffs/{key}")]
+        [Route("/api/v1/seatTariffItems/{key}")]
         [HttpGet]
-        [ProducesResponseType(typeof(SeatTariffDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(SeatTariffItemDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces(MediaTypeNames.Application.Json)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public override async Task<SeatTariffDto> FindAsync([FromRoute] long key)
+        public override async Task<SeatTariffItemDto> FindAsync([FromRoute] long key)
         {
             return await FindUsingEfAsync(key, _ => _.
-                Include(_ => _.Train).
-                Include(_ => _.BaseFare).
-                Include(_ => _.TrainCategory).
-                Include(_ => _.Items));
+                Include(_ => _.WagonClass).
+                Include(_ => _.Season).
+                Include(_ => _.SeatType).
+                Include(_ => _.From).
+                Include(_ => _.To).
+                Include(_ => _.SeatTariff));
         }
 
     }

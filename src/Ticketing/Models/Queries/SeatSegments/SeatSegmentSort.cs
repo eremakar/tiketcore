@@ -10,6 +10,7 @@ namespace Ticketing.Models.Queries.SeatSegments
     {
         public SortOperand? Id { get; set; }
         public SortOperand? Price { get; set; }
+        public SortOperand? Departure { get; set; }
         public SortOperand? SeatId { get; set; }
         public SortOperand? FromId { get; set; }
         public SortOperand? ToId { get; set; }

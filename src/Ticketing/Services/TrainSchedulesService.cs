@@ -1,9 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using Api.AspNetCore.Exceptions;
+using Data.Repository.Helpers;
+using Microsoft.EntityFrameworkCore;
 using Ticketing.Data.TicketDb.DatabaseContext;
 using Ticketing.Data.TicketDb.Entities;
 using Ticketing.Models.Dtos;
-using Data.Repository.Helpers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ticketing.Services
 {
@@ -30,18 +31,23 @@ namespace Ticketing.Services
 			if (!routeId.HasValue)
 				throw new BadRequestException("Train has no route");
 
-			var stationIds = await db.Set<RouteStation>()
-				.Where(_ => _.RouteId == routeId)
-				.OrderBy(_ => _.Order)
-				.Select(_ => _.Id)
-				.ToListAsync();
+		var routeStations = await db.Set<RouteStation>()
+			.Where(_ => _.RouteId == routeId)
+			.OrderBy(_ => _.Order)
+			.ToListAsync();
 
-			if (stationIds.Count < 2)
-				throw new BadRequestException("Route must contain at least 2 stations");
+		if (routeStations.Count < 2)
+			throw new BadRequestException("Route must contain at least 2 stations");
 
-			var stationPairs = new List<(long fromId, long toId)>();
-			for (int i = 0; i < stationIds.Count - 1; i++)
-				stationPairs.Add((stationIds[i], stationIds[i + 1]));
+		var stationPairs = new List<(long fromId, long toId, DateTime departureTime)>();
+		for (int i = 0; i < routeStations.Count - 1; i++)
+		{
+			var fromStation = routeStations[i];
+			var departureTime = fromStation.Departure.HasValue 
+				? schedule.Date.Date + (fromStation.Departure.Value - new DateTime(1900, 1, 1))
+				: schedule.Date.Date;
+			stationPairs.Add((fromStation.Id, routeStations[i + 1].Id, departureTime));
+		}
 
 			var trainWagons = await db.Set<TrainWagon>()
 				.Include(_ => _.Wagon)
@@ -110,7 +116,8 @@ namespace Ticketing.Services
 								TrainId = schedule.TrainId,
 								WagonId = wagonId,
 								TrainScheduleId = schedule.Id,
-								Price = 0
+								Price = 0,
+								Departure = pair.departureTime
 							});
 						}
 					}
@@ -157,18 +164,13 @@ namespace Ticketing.Services
 				throw new BadRequestException("Train has no route");
 
 			// Get route stations for seat segments
-			var routeStationIds = await db.Set<RouteStation>()
+			var routeStations = await db.Set<RouteStation>()
 				.Where(_ => _.RouteId == train.RouteId)
 				.OrderBy(_ => _.Order)
-				.Select(_ => _.Id)
 				.ToListAsync();
 
-			if (routeStationIds.Count < 2)
+			if (routeStations.Count < 2)
 				throw new BadRequestException("Route must contain at least 2 stations");
-
-			var stationPairs = new List<(long? fromId, long? toId)>();
-			for (int i = 0; i < routeStationIds.Count - 1; i++)
-				stationPairs.Add((routeStationIds[i], routeStationIds[i + 1]));
 
 			var response = new TrainScheduleDatesResponseDto();
 
@@ -269,6 +271,17 @@ namespace Ticketing.Services
 							.Where(_ => _.SeatId.HasValue && _.FromId.HasValue && _.ToId.HasValue)
 							.Select(_ => $"{_.SeatId.GetValueOrDefault()}:{_.FromId.GetValueOrDefault()}:{_.ToId.GetValueOrDefault()}"));
 
+						// Create station pairs with departure times for this specific schedule date
+						var stationPairs = new List<(long? fromId, long? toId, DateTime departureTime)>();
+						for (int i = 0; i < routeStations.Count - 1; i++)
+						{
+							var fromStation = routeStations[i];
+							var departureTime = fromStation.Departure.HasValue 
+								? date.Date + (fromStation.Departure.Value - new DateTime(1900, 1, 1))
+								: date.Date;
+							stationPairs.Add((fromStation.Id, routeStations[i + 1].Id, departureTime));
+						}
+
 						// Create SeatSegments for each seat and station pair
 						var toAdd = new List<SeatSegment>();
 						foreach (var seat in existingSeats)
@@ -286,7 +299,8 @@ namespace Ticketing.Services
 										TrainId = existingSchedule.TrainId,
 										WagonId = trainWagon.Id,
 										TrainScheduleId = existingSchedule.Id,
-										Price = 0
+										Price = 0,
+										Departure = pair.departureTime
 									});
 								}
 							}

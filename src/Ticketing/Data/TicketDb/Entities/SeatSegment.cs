@@ -9,6 +9,7 @@ namespace Ticketing.Data.TicketDb.Entities
     {
         public long Id { get; set; }
         public double Price { get; set; }
+        public DateTime Departure { get; set; }
         public long? SeatId { get; set; }
         public long? FromId { get; set; }
         public long? ToId { get; set; }

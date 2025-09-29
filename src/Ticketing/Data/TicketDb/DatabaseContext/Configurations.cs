@@ -321,6 +321,14 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         }
     }
 
+    public class SeatTariffItemsConfiguration : IEntityTypeConfiguration<SeatTariffItem>
+    {
+        public void Configure(EntityTypeBuilder<SeatTariffItem> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
     public class SeatTariffHistoriesConfiguration : IEntityTypeConfiguration<SeatTariffHistory>
     {
         public void Configure(EntityTypeBuilder<SeatTariffHistory> builder)

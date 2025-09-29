@@ -1,4 +1,5 @@
 ﻿using Data.Mapping;
+using Data.Repository.Helpers;
 using Ticketing.Data.TicketDb.Entities;
 using Ticketing.Models.Dtos;
 
@@ -28,6 +29,7 @@ namespace Ticketing.Mappings
             if (options.MapProperties)
             {
                 result.Price = source.Price;
+                result.Departure = source.Departure;
                 result.SeatId = source.SeatId;
                 result.FromId = source.FromId;
                 result.ToId = source.ToId;
@@ -67,6 +69,7 @@ namespace Ticketing.Mappings
             if (options.MapProperties)
             {
                 result.Price = source.Price;
+                result.Departure = source.Departure.ToUtc();
                 result.SeatId = source.SeatId;
                 result.FromId = source.FromId;
                 result.ToId = source.ToId;
@@ -105,6 +108,7 @@ namespace Ticketing.Mappings
             if (options.MapProperties)
             {
                 destination.Price = source.Price;
+                destination.Departure = source.Departure;
                 destination.SeatId = source.SeatId;
                 destination.FromId = source.FromId;
                 destination.ToId = source.ToId;
