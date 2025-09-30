@@ -62,11 +62,11 @@ namespace Ticketing.Tarifications.Services
                     var distance = CalculateDistance(fromStation, toStation);
 
                     // Рассчитываем цену: расстояние * Tariff.IndexCoefficient * Tariff.VAT * Tariff.BaseFare.Price
-                    // var price = distance * 
-                    //            seatTariff.Tariff.IndexCoefficient * 
-                    //            seatTariff.Tariff.VAT * 
-                    //            seatTariff.Tariff.BaseFare.Price;
-                    var price = distance;
+                    var price = distance *
+                               seatTariff.Tariff.IndexCoefficient *
+                               seatTariff.Tariff.VAT *
+                               seatTariff.Tariff.BaseFare.Price;
+                    //var price = distance;
 
                     // Проверяем существующий элемент тарифа
                     var existingItem = await db.Set<SeatTariffItem>()
