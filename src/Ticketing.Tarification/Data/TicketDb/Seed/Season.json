@@ -1,0 +1,26 @@
+﻿[
+    {
+        "Id" : "1",
+        "Name" : "Лето",
+        "Code" : "summer",
+        "TarifCoefficient" : ""
+    },
+    {
+        "Id" : "2",
+        "Name" : "Праздничные дни",
+        "Code" : "holidays",
+        "TarifCoefficient" : ""
+    },
+    {
+        "Id" : "3",
+        "Name" : "Осень",
+        "Code" : "autumn",
+        "TarifCoefficient" : ""
+    },
+    {
+        "Id" : "4",
+        "Name" : "Зима",
+        "Code" : "winter",
+        "TarifCoefficient" : ""
+    }
+]

@@ -313,6 +313,14 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         }
     }
 
+    public class TariffsConfiguration : IEntityTypeConfiguration<Tariff>
+    {
+        public void Configure(EntityTypeBuilder<Tariff> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
     public class SeatTariffsConfiguration : IEntityTypeConfiguration<SeatTariff>
     {
         public void Configure(EntityTypeBuilder<SeatTariff> builder)

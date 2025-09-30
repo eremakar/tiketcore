@@ -14,5 +14,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ticketing\Ticketing.csproj" />
+    <ProjectReference Include="..\Ticketing.Tarification\Ticketing.Tarifications.csproj" />
   </ItemGroup>
 </Project>

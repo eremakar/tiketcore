@@ -36,6 +36,7 @@ namespace Ticketing.Mappings
         public WagonClassMap WagonClassMap { get; }
         public SeasonMap SeasonMap { get; }
         public BaseFareMap BaseFareMap { get; }
+        public TariffMap TariffMap { get; }
         public SeatTariffMap SeatTariffMap { get; }
         public SeatTariffItemMap SeatTariffItemMap { get; }
         public SeatTariffHistoryMap SeatTariffHistoryMap { get; }
@@ -74,6 +75,7 @@ namespace Ticketing.Mappings
             WagonClassMap = new WagonClassMap(this);
             SeasonMap = new SeasonMap(this);
             BaseFareMap = new BaseFareMap(this);
+            TariffMap = new TariffMap(this);
             SeatTariffMap = new SeatTariffMap(this);
             SeatTariffItemMap = new SeatTariffItemMap(this);
             SeatTariffHistoryMap = new SeatTariffHistoryMap(this);

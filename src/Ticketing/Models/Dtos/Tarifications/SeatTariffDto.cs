@@ -12,10 +12,12 @@ namespace Ticketing.Models.Dtos.Tarifications
         public long? TrainId { get; set; }
         public long? BaseFareId { get; set; }
         public long? TrainCategoryId { get; set; }
+        public long? TariffId { get; set; }
 
         public TrainDto? Train { get; set; }
         public BaseFareDto? BaseFare { get; set; }
         public TrainCategoryDto? TrainCategory { get; set; }
+        public TariffDto? Tariff { get; set; }
 
         public List<SeatTariffItemDto>? Items { get; set; }
     }

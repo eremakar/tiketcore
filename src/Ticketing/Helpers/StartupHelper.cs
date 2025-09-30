@@ -44,6 +44,7 @@ namespace Ticketing.Helpers
             services.AddScoped<WagonClassMap>();
             services.AddScoped<SeasonMap>();
             services.AddScoped<BaseFareMap>();
+            services.AddScoped<TariffMap>();
             services.AddScoped<SeatTariffMap>();
             services.AddScoped<SeatTariffItemMap>();
             services.AddScoped<SeatTariffHistoryMap>();

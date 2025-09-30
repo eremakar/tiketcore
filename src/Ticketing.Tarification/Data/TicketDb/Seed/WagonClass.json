@@ -1,0 +1,32 @@
+﻿[
+    {
+        "Id" : "1",
+        "Name" : "Плацкартный",
+        "Code" : "platzkart",
+        "TarifCoefficient" : ""
+    },
+    {
+        "Id" : "2",
+        "Name" : "Купейный",
+        "Code" : "kupe",
+        "TarifCoefficient" : ""
+    },
+    {
+        "Id" : "3",
+        "Name" : "СВ",
+        "Code" : "sv",
+        "TarifCoefficient" : ""
+    },
+    {
+        "Id" : "4",
+        "Name" : "Люкс",
+        "Code" : "lux",
+        "TarifCoefficient" : ""
+    },
+    {
+        "Id" : "5",
+        "Name" : "Сидячий",
+        "Code" : "seat",
+        "TarifCoefficient" : ""
+    }
+]

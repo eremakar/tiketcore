@@ -13,5 +13,6 @@ namespace Ticketing.Models.Queries.Tarifications.SeatTariffs
         public SortOperand? TrainId { get; set; }
         public SortOperand? BaseFareId { get; set; }
         public SortOperand? TrainCategoryId { get; set; }
+        public SortOperand? TariffId { get; set; }
     }
 }

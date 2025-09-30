@@ -39,6 +39,7 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         public DbSet<WagonClass>? WagonClasses { get; set; }
         public DbSet<Season>? Seasons { get; set; }
         public DbSet<BaseFare>? BaseFares { get; set; }
+        public DbSet<Tariff>? Tariffs { get; set; }
         public DbSet<SeatTariff>? SeatTariffs { get; set; }
         public DbSet<SeatTariffItem>? SeatTariffItems { get; set; }
         public DbSet<SeatTariffHistory>? SeatTariffHistories { get; set; }
@@ -82,6 +83,7 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
             modelBuilder.ApplyConfiguration(new WagonClassesConfiguration());
             modelBuilder.ApplyConfiguration(new SeasonsConfiguration());
             modelBuilder.ApplyConfiguration(new BaseFaresConfiguration());
+            modelBuilder.ApplyConfiguration(new TariffsConfiguration());
             modelBuilder.ApplyConfiguration(new SeatTariffsConfiguration());
             modelBuilder.ApplyConfiguration(new SeatTariffItemsConfiguration());
             modelBuilder.ApplyConfiguration(new SeatTariffHistoriesConfiguration());

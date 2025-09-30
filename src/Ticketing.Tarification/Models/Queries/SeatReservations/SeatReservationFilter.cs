@@ -1,0 +1,23 @@
+﻿using Data.Repository;
+using Ticketing.Tarifications.Data.TicketDb.Entities;
+
+namespace Ticketing.Tarifications.Models.Queries.SeatReservations
+{
+    /// <summary>
+    /// Бронирование места
+    /// </summary>
+    public partial class SeatReservationFilter : FilterBase<SeatReservation>
+    {
+        public FilterOperand<long>? Id { get; set; }
+        public FilterOperand<string>? Number { get; set; }
+        public FilterOperand<DateTime>? Date { get; set; }
+        public FilterOperand<double>? Price { get; set; }
+        public FilterOperand<string>? Total { get; set; }
+        public FilterOperand<long?>? FromId { get; set; }
+        public FilterOperand<long?>? ToId { get; set; }
+        public FilterOperand<long?>? TrainId { get; set; }
+        public FilterOperand<long?>? WagonId { get; set; }
+        public FilterOperand<long?>? SeatId { get; set; }
+        public FilterOperand<long?>? TrainScheduleId { get; set; }
+    }
+}

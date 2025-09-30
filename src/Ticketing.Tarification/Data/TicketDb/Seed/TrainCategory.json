@@ -1,0 +1,20 @@
+﻿[
+    {
+        "Id" : "1",
+        "Name" : "Скорый",
+        "Code" : "fast",
+        "TarifCoefficient" : ""
+    },
+    {
+        "Id" : "2",
+        "Name" : "Пассажирский",
+        "Code" : "passenger",
+        "TarifCoefficient" : ""
+    },
+    {
+        "Id" : "3",
+        "Name" : "Фирменный",
+        "Code" : "brand",
+        "TarifCoefficient" : ""
+    }
+]

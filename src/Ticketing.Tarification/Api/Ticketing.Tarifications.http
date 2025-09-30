@@ -1,0 +1,15 @@
+﻿@mainHost = http://localhost:20088/api/v1/
+@host = http://localhost:20089/api/v1/
+### health
+GET {{host}}health
+
+### Get JWT access token by password and user login
+# @name loginReq
+POST {{mainHost}}authenticate
+Content-Type: application/json
+
+{
+    "username":"user",
+    "password":"pass"
+}
+
