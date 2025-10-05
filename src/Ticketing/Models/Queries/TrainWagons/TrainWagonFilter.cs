@@ -12,5 +12,6 @@ namespace Ticketing.Models.Queries.TrainWagons
         public FilterOperand<string>? Number { get; set; }
         public FilterOperand<long?>? TrainScheduleId { get; set; }
         public FilterOperand<long?>? WagonId { get; set; }
+        public FilterOperand<long?>? CarrierId { get; set; }
     }
 }

@@ -175,6 +175,22 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         }
     }
 
+    public class WagonFeaturesConfiguration : IEntityTypeConfiguration<WagonFeature>
+    {
+        public void Configure(EntityTypeBuilder<WagonFeature> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class WagonModelFeaturesConfiguration : IEntityTypeConfiguration<WagonModelFeature>
+    {
+        public void Configure(EntityTypeBuilder<WagonModelFeature> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
     public class CarriersConfiguration : IEntityTypeConfiguration<Carrier>
     {
         public bool IsInMemoryDb { get; set; }
@@ -205,6 +221,14 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
     public class SeatTypesConfiguration : IEntityTypeConfiguration<SeatType>
     {
         public void Configure(EntityTypeBuilder<SeatType> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class SeatPurposesConfiguration : IEntityTypeConfiguration<SeatPurpose>
+    {
+        public void Configure(EntityTypeBuilder<SeatPurpose> builder)
         {
             builder.HasKey(x => x.Id);
         }

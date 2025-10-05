@@ -5,39 +5,35 @@ using Ticketing.Models.Dtos;
 namespace Ticketing.Mappings
 {
     /// <summary>
-    /// Место в вагоне
+    /// Особенности модели вагона
     /// </summary>
-    public partial class SeatMap : MapBase2<Seat, SeatDto, MapOptions>
+    public partial class WagonModelFeatureMap : MapBase2<WagonModelFeature, WagonModelFeatureDto, MapOptions>
     {
         private readonly DbMapContext mapContext;
 
-        public SeatMap(DbMapContext mapContext)
+        public WagonModelFeatureMap(DbMapContext mapContext)
         {
             this.mapContext = mapContext;
         }
 
-        public override SeatDto MapCore(Seat source, MapOptions? options = null)
+        public override WagonModelFeatureDto MapCore(WagonModelFeature source, MapOptions? options = null)
         {
             if (source == null)
                 return null;
 
             options = options ?? new MapOptions();
 
-            var result = new SeatDto();
+            var result = new WagonModelFeatureDto();
             result.Id = source.Id;
             if (options.MapProperties)
             {
-                result.Number = source.Number;
-                result.Class = source.Class;
                 result.WagonId = source.WagonId;
-                result.TypeId = source.TypeId;
-                result.PurposeId = source.PurposeId;
+                result.FeatureId = source.FeatureId;
             }
             if (options.MapObjects)
             {
                 result.Wagon = mapContext.WagonModelMap.Map(source.Wagon, options);
-                result.Type = mapContext.SeatTypeMap.Map(source.Type, options);
-                result.Purpose = mapContext.SeatPurposeMap.Map(source.Purpose, options);
+                result.Feature = mapContext.WagonFeatureMap.Map(source.Feature, options);
             }
             if (options.MapCollections)
             {
@@ -46,31 +42,26 @@ namespace Ticketing.Mappings
             return result;
         }
 
-        public override Seat ReverseMapCore(SeatDto source, MapOptions options = null)
+        public override WagonModelFeature ReverseMapCore(WagonModelFeatureDto source, MapOptions options = null)
         {
             if (source == null)
                 return null;
 
             options = options ?? new MapOptions();
 
-            var result = new Seat();
+            var result = new WagonModelFeature();
             result.Id = source.Id;
             if (options.MapProperties)
             {
-                result.Number = source.Number;
-                result.Class = source.Class;
                 result.WagonId = source.WagonId;
-                result.TypeId = source.TypeId;
-                result.PurposeId = source.PurposeId;
+                result.FeatureId = source.FeatureId;
             }
             if (options.MapObjects)
             {
                 if (source.WagonId == null)
                     result.Wagon = mapContext.WagonModelMap.ReverseMap(source.Wagon, options);
-                if (source.TypeId == null)
-                    result.Type = mapContext.SeatTypeMap.ReverseMap(source.Type, options);
-                if (source.PurposeId == null)
-                    result.Purpose = mapContext.SeatPurposeMap.ReverseMap(source.Purpose, options);
+                if (source.FeatureId == null)
+                    result.Feature = mapContext.WagonFeatureMap.ReverseMap(source.Feature, options);
             }
             if (options.MapCollections)
             {
@@ -79,7 +70,7 @@ namespace Ticketing.Mappings
             return result;
         }
 
-        public override void MapCore(Seat source, Seat destination, MapOptions options = null)
+        public override void MapCore(WagonModelFeature source, WagonModelFeature destination, MapOptions options = null)
         {
             if (source == null || destination == null)
                 return;
@@ -89,11 +80,8 @@ namespace Ticketing.Mappings
             destination.Id = source.Id;
             if (options.MapProperties)
             {
-                destination.Number = source.Number;
-                destination.Class = source.Class;
                 destination.WagonId = source.WagonId;
-                destination.TypeId = source.TypeId;
-                destination.PurposeId = source.PurposeId;
+                destination.FeatureId = source.FeatureId;
             }
             if (options.MapObjects)
             {

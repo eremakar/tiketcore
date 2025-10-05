@@ -17,6 +17,7 @@ namespace Ticketing.Models.Dtos
         public WagonClassDto? Class { get; set; }
         public WagonTypeDto? Type { get; set; }
 
+        public List<WagonModelFeatureDto>? Features { get; set; }
         public List<SeatDto>? Seats { get; set; }
     }
 }

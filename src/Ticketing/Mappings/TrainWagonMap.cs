@@ -30,11 +30,13 @@ namespace Ticketing.Mappings
                 result.Number = source.Number;
                 result.TrainScheduleId = source.TrainScheduleId;
                 result.WagonId = source.WagonId;
+                result.CarrierId = source.CarrierId;
             }
             if (options.MapObjects)
             {
                 result.TrainSchedule = mapContext.TrainScheduleMap.Map(source.TrainSchedule, options);
                 result.Wagon = mapContext.WagonModelMap.Map(source.Wagon, options);
+                result.Carrier = mapContext.CarrierMap.Map(source.Carrier, options);
             }
             if (options.MapCollections)
             {
@@ -57,6 +59,7 @@ namespace Ticketing.Mappings
                 result.Number = source.Number;
                 result.TrainScheduleId = source.TrainScheduleId;
                 result.WagonId = source.WagonId;
+                result.CarrierId = source.CarrierId;
             }
             if (options.MapObjects)
             {
@@ -64,6 +67,8 @@ namespace Ticketing.Mappings
                     result.TrainSchedule = mapContext.TrainScheduleMap.ReverseMap(source.TrainSchedule, options);
                 if (source.WagonId == null)
                     result.Wagon = mapContext.WagonModelMap.ReverseMap(source.Wagon, options);
+                if (source.CarrierId == null)
+                    result.Carrier = mapContext.CarrierMap.ReverseMap(source.Carrier, options);
             }
             if (options.MapCollections)
             {
@@ -85,6 +90,7 @@ namespace Ticketing.Mappings
                 destination.Number = source.Number;
                 destination.TrainScheduleId = source.TrainScheduleId;
                 destination.WagonId = source.WagonId;
+                destination.CarrierId = source.CarrierId;
             }
             if (options.MapObjects)
             {

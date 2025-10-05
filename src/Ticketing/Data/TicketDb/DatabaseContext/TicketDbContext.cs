@@ -24,9 +24,12 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         public DbSet<TrainWagonsPlanWagon>? TrainWagonsPlanWagons { get; set; }
         public DbSet<WagonModel>? WagonModels { get; set; }
         public DbSet<WagonType>? WagonTypes { get; set; }
+        public DbSet<WagonFeature>? WagonFeatures { get; set; }
+        public DbSet<WagonModelFeature>? WagonModelFeatures { get; set; }
         public DbSet<Carrier>? Carriers { get; set; }
         public DbSet<Service>? Services { get; set; }
         public DbSet<SeatType>? SeatTypes { get; set; }
+        public DbSet<SeatPurpose>? SeatPurposes { get; set; }
         public DbSet<Seat>? Seats { get; set; }
         public DbSet<SeatSegment>? SeatSegments { get; set; }
         public DbSet<SeatCountSegment>? SeatCountSegments { get; set; }
@@ -76,9 +79,12 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
             modelBuilder.ApplyConfiguration(new TrainWagonsPlanWagonsConfiguration());
             modelBuilder.ApplyConfiguration(new WagonModelsConfiguration { IsInMemoryDb = this.IsInMemoryDb() });
             modelBuilder.ApplyConfiguration(new WagonTypesConfiguration());
+            modelBuilder.ApplyConfiguration(new WagonFeaturesConfiguration());
+            modelBuilder.ApplyConfiguration(new WagonModelFeaturesConfiguration());
             modelBuilder.ApplyConfiguration(new CarriersConfiguration { IsInMemoryDb = this.IsInMemoryDb() });
             modelBuilder.ApplyConfiguration(new ServicesConfiguration());
             modelBuilder.ApplyConfiguration(new SeatTypesConfiguration());
+            modelBuilder.ApplyConfiguration(new SeatPurposesConfiguration());
             modelBuilder.ApplyConfiguration(new SeatsConfiguration());
             modelBuilder.ApplyConfiguration(new SeatSegmentsConfiguration());
             modelBuilder.ApplyConfiguration(new SeatCountSegmentsConfiguration { IsInMemoryDb = this.IsInMemoryDb() });

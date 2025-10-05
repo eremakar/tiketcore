@@ -44,6 +44,7 @@ namespace Ticketing.Mappings
             }
             if (options.MapCollections)
             {
+                result.Features = mapContext.WagonModelFeatureMap.Map(source.Features, options);
                 result.Seats = mapContext.SeatMap.Map(source.Seats, options);
             }
 
@@ -77,6 +78,7 @@ namespace Ticketing.Mappings
             }
             if (options.MapCollections)
             {
+                result.Features = mapContext.WagonModelFeatureMap.ReverseMap(source.Features, options);
                 result.Seats = mapContext.SeatMap.ReverseMap(source.Seats, options);
             }
 

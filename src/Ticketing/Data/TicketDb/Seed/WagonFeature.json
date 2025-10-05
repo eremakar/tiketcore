@@ -1,0 +1,32 @@
+﻿[
+    {
+        "Id" : "1",
+        "Name" : "Душевая",
+        "Code" : "shower"
+    },
+    {
+        "Id" : "2",
+        "Name" : "Умывальник",
+        "Code" : "sink"
+    },
+    {
+        "Id" : "3",
+        "Name" : "Биотуалет",
+        "Code" : "bioToilet"
+    },
+    {
+        "Id" : "4",
+        "Name" : "Кондиционер",
+        "Code" : "airConditioner"
+    },
+    {
+        "Id" : "5",
+        "Name" : "Медиа-сервис",
+        "Code" : "mediaService"
+    },
+    {
+        "Id" : "6",
+        "Name" : "Доступ в интернет",
+        "Code" : "internetAccess"
+    }
+]

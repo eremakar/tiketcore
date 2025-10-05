@@ -4,7 +4,7 @@ using Ticketing.Data.TicketDb.DatabaseContext;
 using Ticketing.Data.TicketDb.Entities;
 using Ticketing.Mappings;
 using Ticketing.Models.Dtos;
-using Ticketing.Models.Queries.Seats;
+using Ticketing.Models.Queries.WagonModelFeatures;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,66 +15,64 @@ using Microsoft.EntityFrameworkCore;
 namespace Ticketing.Controllers
 {
     /// <summary>
-    /// Место в вагоне
+    /// Особенности модели вагона
     /// </summary>
-    [Route("/api/v1/seats")]
+    [Route("/api/v1/wagonModelFeatures")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "SuperAdministrator,Administrator")]
-    public partial class SeatsController : RestControllerBase2<Seat, long, SeatDto, SeatQuery, SeatMap>
+    public partial class WagonModelFeaturesController : RestControllerBase2<WagonModelFeature, long, WagonModelFeatureDto, WagonModelFeatureQuery, WagonModelFeatureMap>
     {
-        public SeatsController(ILogger<RestServiceBase<Seat, long>> logger,
+        public WagonModelFeaturesController(ILogger<RestServiceBase<WagonModelFeature, long>> logger,
             IDapperDbContext restDapperDb,
             TicketDbContext restDb,
-            SeatMap seatMap)
+            WagonModelFeatureMap wagonModelFeatureMap)
             : base(logger,
                 restDapperDb,
                 restDb,
-                "Seats",
-                seatMap)
+                "WagonModelFeatures",
+                wagonModelFeatureMap)
         {
         }
 
         /// <summary>
-        /// Search of Seat using given query
+        /// Search of WagonModelFeature using given query
         /// </summary>
         /// <remarks>
         /// </remarks>
-        /// <response code="200">List of seats</response>
+        /// <response code="200">List of wagonModelFeatures</response>
         /// <response code="400">Validation errors detected, operation denied</response>
         /// <response code="401">Unauthorized request</response>
-        [Route("/api/v1/seats/search")]
+        [Route("/api/v1/wagonModelFeatures/search")]
         [HttpPost]
-        [ProducesResponseType(typeof(PagedList<SeatDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PagedList<WagonModelFeatureDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces(MediaTypeNames.Application.Json)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public override async Task<PagedList<SeatDto>> SearchAsync([FromBody] SeatQuery query)
+        public override async Task<PagedList<WagonModelFeatureDto>> SearchAsync([FromBody] WagonModelFeatureQuery query)
         {
             return await SearchUsingEfAsync(query, _ => _.
                 Include(_ => _.Wagon).
-                Include(_ => _.Type).
-                Include(_ => _.Purpose));
+                Include(_ => _.Feature));
         }
 
         /// <summary>
-        /// Get the seat by id
+        /// Get the wagonModelFeature by id
         /// </summary>
         /// <remarks>
         /// </remarks>
-        /// <response code="200">Seat data</response>
+        /// <response code="200">WagonModelFeature data</response>
         /// <response code="401">Unauthorized request</response>
-        [Route("/api/v1/seats/{key}")]
+        [Route("/api/v1/wagonModelFeatures/{key}")]
         [HttpGet]
-        [ProducesResponseType(typeof(SeatDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(WagonModelFeatureDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Produces(MediaTypeNames.Application.Json)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public override async Task<SeatDto> FindAsync([FromRoute] long key)
+        public override async Task<WagonModelFeatureDto> FindAsync([FromRoute] long key)
         {
             return await FindUsingEfAsync(key, _ => _.
                 Include(_ => _.Wagon).
-                Include(_ => _.Type).
-                Include(_ => _.Purpose));
+                Include(_ => _.Feature));
         }
 
     }

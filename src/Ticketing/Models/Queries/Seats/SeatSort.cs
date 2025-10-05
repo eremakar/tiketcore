@@ -16,5 +16,9 @@ namespace Ticketing.Models.Queries.Seats
         /// Тип места: верхний/боковой/нижний
         /// </summary>
         public SortOperand? TypeId { get; set; }
+        /// <summary>
+        /// Назначение места
+        /// </summary>
+        public SortOperand? PurposeId { get; set; }
     }
 }

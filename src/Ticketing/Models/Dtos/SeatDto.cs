@@ -14,11 +14,19 @@ namespace Ticketing.Models.Dtos
         /// Тип места: верхний/боковой/нижний
         /// </summary>
         public long? TypeId { get; set; }
+        /// <summary>
+        /// Назначение места
+        /// </summary>
+        public long? PurposeId { get; set; }
 
         public WagonModelDto? Wagon { get; set; }
         /// <summary>
         /// Тип места: верхний/боковой/нижний
         /// </summary>
         public SeatTypeDto? Type { get; set; }
+        /// <summary>
+        /// Назначение места
+        /// </summary>
+        public SeatPurposeDto? Purpose { get; set; }
     }
 }

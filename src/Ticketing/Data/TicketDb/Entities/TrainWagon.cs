@@ -11,8 +11,10 @@ namespace Ticketing.Data.TicketDb.Entities
         public string? Number { get; set; }
         public long? TrainScheduleId { get; set; }
         public long? WagonId { get; set; }
+        public long? CarrierId { get; set; }
 
         public TrainSchedule? TrainSchedule { get; set; }
         public WagonModel? Wagon { get; set; }
+        public Carrier? Carrier { get; set; }
     }
 }

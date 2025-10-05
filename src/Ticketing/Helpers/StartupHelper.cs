@@ -29,9 +29,12 @@ namespace Ticketing.Helpers
             services.AddScoped<TrainWagonsPlanWagonMap>();
             services.AddScoped<WagonModelMap>();
             services.AddScoped<WagonTypeMap>();
+            services.AddScoped<WagonFeatureMap>();
+            services.AddScoped<WagonModelFeatureMap>();
             services.AddScoped<CarrierMap>();
             services.AddScoped<ServiceMap>();
             services.AddScoped<SeatTypeMap>();
+            services.AddScoped<SeatPurposeMap>();
             services.AddScoped<SeatMap>();
             services.AddScoped<SeatSegmentMap>();
             services.AddScoped<SeatCountSegmentMap>();

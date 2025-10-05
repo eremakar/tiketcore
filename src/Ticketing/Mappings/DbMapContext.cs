@@ -21,9 +21,12 @@ namespace Ticketing.Mappings
         public TrainWagonsPlanWagonMap TrainWagonsPlanWagonMap { get; }
         public WagonModelMap WagonModelMap { get; }
         public WagonTypeMap WagonTypeMap { get; }
+        public WagonFeatureMap WagonFeatureMap { get; }
+        public WagonModelFeatureMap WagonModelFeatureMap { get; }
         public CarrierMap CarrierMap { get; }
         public ServiceMap ServiceMap { get; }
         public SeatTypeMap SeatTypeMap { get; }
+        public SeatPurposeMap SeatPurposeMap { get; }
         public SeatMap SeatMap { get; }
         public SeatSegmentMap SeatSegmentMap { get; }
         public SeatCountSegmentMap SeatCountSegmentMap { get; }
@@ -68,9 +71,12 @@ namespace Ticketing.Mappings
             TrainWagonsPlanWagonMap = new TrainWagonsPlanWagonMap(this);
             WagonModelMap = new WagonModelMap(this);
             WagonTypeMap = new WagonTypeMap(this);
+            WagonFeatureMap = new WagonFeatureMap(this);
+            WagonModelFeatureMap = new WagonModelFeatureMap(this);
             CarrierMap = new CarrierMap(this);
             ServiceMap = new ServiceMap(this);
             SeatTypeMap = new SeatTypeMap(this);
+            SeatPurposeMap = new SeatPurposeMap(this);
             SeatMap = new SeatMap(this);
             SeatSegmentMap = new SeatSegmentMap(this);
             SeatCountSegmentMap = new SeatCountSegmentMap(this);

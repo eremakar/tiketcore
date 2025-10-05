@@ -60,6 +60,7 @@ namespace Ticketing.Controllers
             return await SearchUsingEfAsync(query, _ => _.
                 Include(_ => _.Class).
                 Include(_ => _.Type).
+                Include(_ => _.Features).
                 Include(_ => _.Seats));
         }
 
@@ -81,6 +82,7 @@ namespace Ticketing.Controllers
             return await FindUsingEfAsync(key, _ => _.
                 Include(_ => _.Class).
                 Include(_ => _.Type).
+                Include(_ => _.Features).
                 Include(_ => _.Seats));
         }
 

@@ -22,6 +22,8 @@ namespace Ticketing.Data.TicketDb.Entities
         public WagonType? Type { get; set; }
 
         [InverseProperty("Wagon")]
+        public List<WagonModelFeature>? Features { get; set; }
+        [InverseProperty("Wagon")]
         public List<Seat>? Seats { get; set; }
     }
 }

@@ -15,8 +15,13 @@ namespace Ticketing.Data.TicketDb.Entities
         /// Тип места: верхний/боковой/нижний
         /// </summary>
         public long? TypeId { get; set; }
+        /// <summary>
+        /// Назначение места
+        /// </summary>
+        public long? PurposeId { get; set; }
 
         public WagonModel? Wagon { get; set; }
         public SeatType? Type { get; set; }
+        public SeatPurpose? Purpose { get; set; }
     }
 }

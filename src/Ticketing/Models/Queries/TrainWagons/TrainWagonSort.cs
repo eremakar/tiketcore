@@ -12,5 +12,6 @@ namespace Ticketing.Models.Queries.TrainWagons
         public SortOperand? Number { get; set; }
         public SortOperand? TrainScheduleId { get; set; }
         public SortOperand? WagonId { get; set; }
+        public SortOperand? CarrierId { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Ticketing.Data.TicketDb.DatabaseContext;
@@ -11,9 +12,10 @@ using Ticketing.Data.TicketDb.DatabaseContext;
 namespace Ticketing.Migrations
 {
     [DbContext(typeof(TicketDbContext))]
-    partial class TicketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251005182705_WagonFeature")]
+    partial class WagonFeature
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,9 +260,6 @@ namespace Ticketing.Migrations
                     b.Property<string>("Number")
                         .HasColumnType("text");
 
-                    b.Property<long?>("PurposeId")
-                        .HasColumnType("bigint");
-
                     b.Property<long?>("TypeId")
                         .HasColumnType("bigint");
 
@@ -268,8 +267,6 @@ namespace Ticketing.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PurposeId");
 
                     b.HasIndex("TypeId");
 
@@ -379,25 +376,6 @@ namespace Ticketing.Migrations
                     b.HasIndex("WagonId");
 
                     b.ToTable("SeatCountSegments");
-                });
-
-            modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.SeatPurpose", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Code")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SeatPurposes");
                 });
 
             modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.SeatReservation", b =>
@@ -1640,10 +1618,6 @@ namespace Ticketing.Migrations
 
             modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.Seat", b =>
                 {
-                    b.HasOne("Ticketing.Data.TicketDb.Entities.SeatPurpose", "Purpose")
-                        .WithMany()
-                        .HasForeignKey("PurposeId");
-
                     b.HasOne("Ticketing.Data.TicketDb.Entities.SeatType", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId");
@@ -1651,8 +1625,6 @@ namespace Ticketing.Migrations
                     b.HasOne("Ticketing.Data.TicketDb.Entities.WagonModel", "Wagon")
                         .WithMany("Seats")
                         .HasForeignKey("WagonId");
-
-                    b.Navigation("Purpose");
 
                     b.Navigation("Type");
 
