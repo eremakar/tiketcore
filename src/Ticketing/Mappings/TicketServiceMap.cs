@@ -60,8 +60,10 @@ namespace Ticketing.Mappings
             }
             if (options.MapObjects)
             {
-                result.Ticket = mapContext.TicketMap.ReverseMap(source.Ticket, options);
-                result.Service = mapContext.ServiceMap.ReverseMap(source.Service, options);
+                if (source.TicketId == null)
+                    result.Ticket = mapContext.TicketMap.ReverseMap(source.Ticket, options);
+                if (source.ServiceId == null)
+                    result.Service = mapContext.ServiceMap.ReverseMap(source.Service, options);
             }
             if (options.MapCollections)
             {

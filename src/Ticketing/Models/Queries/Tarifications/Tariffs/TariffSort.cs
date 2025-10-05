@@ -10,10 +10,7 @@ namespace Ticketing.Models.Queries.Tarifications.Tariffs
     {
         public SortOperand? Id { get; set; }
         public SortOperand? Name { get; set; }
-        public SortOperand? IndexCoefficient { get; set; }
         public SortOperand? VAT { get; set; }
         public SortOperand? BaseFareId { get; set; }
-        public SortOperand? TrainCategoryId { get; set; }
-        public SortOperand? WagonId { get; set; }
     }
 }

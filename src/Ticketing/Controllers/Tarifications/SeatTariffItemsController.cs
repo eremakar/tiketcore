@@ -53,6 +53,7 @@ namespace Ticketing.Controllers.Tarifications
             return await SearchUsingEfAsync(query, _ => _.
                 Include(_ => _.WagonClass).
                 Include(_ => _.Season).
+                Include(_ => _.Wagon).
                 Include(_ => _.SeatType).
                 Include(_ => _.From).
                 Include(_ => _.To).
@@ -77,6 +78,7 @@ namespace Ticketing.Controllers.Tarifications
             return await FindUsingEfAsync(key, _ => _.
                 Include(_ => _.WagonClass).
                 Include(_ => _.Season).
+                Include(_ => _.Wagon).
                 Include(_ => _.SeatType).
                 Include(_ => _.From).
                 Include(_ => _.To).

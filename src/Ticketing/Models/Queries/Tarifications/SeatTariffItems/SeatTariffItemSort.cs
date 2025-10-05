@@ -9,10 +9,12 @@ namespace Ticketing.Models.Queries.Tarifications.SeatTariffItems
     public partial class SeatTariffItemSort : SortBase<SeatTariffItem>
     {
         public SortOperand? Id { get; set; }
+        public SortOperand? CalculationParameters { get; set; }
         public SortOperand? Distance { get; set; }
         public SortOperand? Price { get; set; }
         public SortOperand? WagonClassId { get; set; }
         public SortOperand? SeasonId { get; set; }
+        public SortOperand? WagonId { get; set; }
         public SortOperand? SeatTypeId { get; set; }
         public SortOperand? FromId { get; set; }
         public SortOperand? ToId { get; set; }

@@ -16,7 +16,7 @@ namespace Ticketing.Tarifications.Data.TicketDb.Entities
         /// </summary>
         public long? TypeId { get; set; }
 
-        public TrainWagon? Wagon { get; set; }
+        public WagonModel? Wagon { get; set; }
         public SeatType? Type { get; set; }
     }
 }

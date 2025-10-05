@@ -52,8 +52,9 @@ namespace Ticketing.Tarifications.Controllers.Tarifications
         {
             return await SearchUsingEfAsync(query, _ => _.
                 Include(_ => _.BaseFare).
-                Include(_ => _.TrainCategory).
-                Include(_ => _.Wagon));
+                Include(_ => _.TrainCategories).
+                Include(_ => _.Wagons).
+                Include(_ => _.WagonTypes));
         }
 
         /// <summary>
@@ -73,8 +74,9 @@ namespace Ticketing.Tarifications.Controllers.Tarifications
         {
             return await FindUsingEfAsync(key, _ => _.
                 Include(_ => _.BaseFare).
-                Include(_ => _.TrainCategory).
-                Include(_ => _.Wagon));
+                Include(_ => _.TrainCategories).
+                Include(_ => _.Wagons).
+                Include(_ => _.WagonTypes));
         }
 
     }

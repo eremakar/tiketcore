@@ -34,11 +34,10 @@ namespace Ticketing.Mappings
             if (options.MapObjects)
             {
                 result.TrainSchedule = mapContext.TrainScheduleMap.Map(source.TrainSchedule, options);
-                result.Wagon = mapContext.WagonMap.Map(source.Wagon, options);
+                result.Wagon = mapContext.WagonModelMap.Map(source.Wagon, options);
             }
             if (options.MapCollections)
             {
-                result.Seats = mapContext.SeatMap.Map(source.Seats, options);
             }
 
             return result;
@@ -61,12 +60,13 @@ namespace Ticketing.Mappings
             }
             if (options.MapObjects)
             {
-                result.TrainSchedule = mapContext.TrainScheduleMap.ReverseMap(source.TrainSchedule, options);
-                result.Wagon = mapContext.WagonMap.ReverseMap(source.Wagon, options);
+                if (source.TrainScheduleId == null)
+                    result.TrainSchedule = mapContext.TrainScheduleMap.ReverseMap(source.TrainSchedule, options);
+                if (source.WagonId == null)
+                    result.Wagon = mapContext.WagonModelMap.ReverseMap(source.Wagon, options);
             }
             if (options.MapCollections)
             {
-                result.Seats = mapContext.SeatMap.ReverseMap(source.Seats, options);
             }
 
             return result;

@@ -1,4 +1,5 @@
-﻿
+﻿using Ticketing.Models.Dtos.Tarifications;
+
 namespace Ticketing.Models.Dtos
 {
     /// <summary>
@@ -10,7 +11,9 @@ namespace Ticketing.Models.Dtos
         public DateTime Date { get; set; }
         public bool Active { get; set; }
         public long? TrainId { get; set; }
+        public long? SeatTariffId { get; set; }
 
         public TrainDto? Train { get; set; }
+        public SeatTariffDto? SeatTariff { get; set; }
     }
 }

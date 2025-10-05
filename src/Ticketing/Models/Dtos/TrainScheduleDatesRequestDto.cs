@@ -18,5 +18,10 @@ namespace Ticketing.Models.Dtos
         /// </summary>
         [Required]
         public List<DateTime> Dates { get; set; } = new List<DateTime>();
+
+        /// <summary>
+        /// Optional workflow task ID for progress tracking
+        /// </summary>
+        public long? WorkflowTaskId { get; set; }
     }
 }

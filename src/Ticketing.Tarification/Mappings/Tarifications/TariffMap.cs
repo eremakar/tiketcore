@@ -28,20 +28,18 @@ namespace Ticketing.Tarifications.Mappings.Tarifications
             if (options.MapProperties)
             {
                 result.Name = source.Name;
-                result.IndexCoefficient = source.IndexCoefficient;
                 result.VAT = source.VAT;
                 result.BaseFareId = source.BaseFareId;
-                result.TrainCategoryId = source.TrainCategoryId;
-                result.WagonId = source.WagonId;
             }
             if (options.MapObjects)
             {
                 result.BaseFare = mapContext.BaseFareMap.Map(source.BaseFare, options);
-                result.TrainCategory = mapContext.TrainCategoryMap.Map(source.TrainCategory, options);
-                result.Wagon = mapContext.WagonMap.Map(source.Wagon, options);
             }
             if (options.MapCollections)
             {
+                result.TrainCategories = mapContext.TariffTrainCategoryItemMap.Map(source.TrainCategories, options);
+                result.Wagons = mapContext.TariffWagonItemMap.Map(source.Wagons, options);
+                result.WagonTypes = mapContext.TariffWagonTypeItemMap.Map(source.WagonTypes, options);
             }
 
             return result;
@@ -59,20 +57,19 @@ namespace Ticketing.Tarifications.Mappings.Tarifications
             if (options.MapProperties)
             {
                 result.Name = source.Name;
-                result.IndexCoefficient = source.IndexCoefficient;
                 result.VAT = source.VAT;
                 result.BaseFareId = source.BaseFareId;
-                result.TrainCategoryId = source.TrainCategoryId;
-                result.WagonId = source.WagonId;
             }
             if (options.MapObjects)
             {
-                result.BaseFare = mapContext.BaseFareMap.ReverseMap(source.BaseFare, options);
-                result.TrainCategory = mapContext.TrainCategoryMap.ReverseMap(source.TrainCategory, options);
-                result.Wagon = mapContext.WagonMap.ReverseMap(source.Wagon, options);
+                if (source.BaseFareId == null)
+                    result.BaseFare = mapContext.BaseFareMap.ReverseMap(source.BaseFare, options);
             }
             if (options.MapCollections)
             {
+                result.TrainCategories = mapContext.TariffTrainCategoryItemMap.ReverseMap(source.TrainCategories, options);
+                result.Wagons = mapContext.TariffWagonItemMap.ReverseMap(source.Wagons, options);
+                result.WagonTypes = mapContext.TariffWagonTypeItemMap.ReverseMap(source.WagonTypes, options);
             }
 
             return result;
@@ -89,11 +86,8 @@ namespace Ticketing.Tarifications.Mappings.Tarifications
             if (options.MapProperties)
             {
                 destination.Name = source.Name;
-                destination.IndexCoefficient = source.IndexCoefficient;
                 destination.VAT = source.VAT;
                 destination.BaseFareId = source.BaseFareId;
-                destination.TrainCategoryId = source.TrainCategoryId;
-                destination.WagonId = source.WagonId;
             }
             if (options.MapObjects)
             {

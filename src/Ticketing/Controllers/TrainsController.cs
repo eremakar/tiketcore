@@ -54,7 +54,8 @@ namespace Ticketing.Controllers
                 Include(_ => _.From).
                 Include(_ => _.To).
                 Include(_ => _.Route).
-                Include(_ => _.Plan));
+                Include(_ => _.Plan).
+                Include(_ => _.Category));
         }
 
         /// <summary>
@@ -76,7 +77,8 @@ namespace Ticketing.Controllers
                 Include(_ => _.From).
                 Include(_ => _.To).
                 Include(_ => _.Route).
-                Include(_ => _.Plan));
+                Include(_ => _.Plan).
+                Include(_ => _.Category));
         }
 
     }

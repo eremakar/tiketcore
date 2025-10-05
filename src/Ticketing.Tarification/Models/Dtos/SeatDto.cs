@@ -15,7 +15,7 @@ namespace Ticketing.Tarifications.Models.Dtos
         /// </summary>
         public long? TypeId { get; set; }
 
-        public TrainWagonDto? Wagon { get; set; }
+        public WagonModelDto? Wagon { get; set; }
         /// <summary>
         /// Тип места: верхний/боковой/нижний
         /// </summary>

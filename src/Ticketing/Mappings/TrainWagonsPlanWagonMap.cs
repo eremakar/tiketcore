@@ -34,7 +34,7 @@ namespace Ticketing.Mappings
             if (options.MapObjects)
             {
                 result.Plan = mapContext.TrainWagonsPlanMap.Map(source.Plan, options);
-                result.Wagon = mapContext.WagonMap.Map(source.Wagon, options);
+                result.Wagon = mapContext.WagonModelMap.Map(source.Wagon, options);
             }
             if (options.MapCollections)
             {
@@ -60,8 +60,10 @@ namespace Ticketing.Mappings
             }
             if (options.MapObjects)
             {
-                result.Plan = mapContext.TrainWagonsPlanMap.ReverseMap(source.Plan, options);
-                result.Wagon = mapContext.WagonMap.ReverseMap(source.Wagon, options);
+                if (source.PlanId == null)
+                    result.Plan = mapContext.TrainWagonsPlanMap.ReverseMap(source.Plan, options);
+                if (source.WagonId == null)
+                    result.Wagon = mapContext.WagonModelMap.ReverseMap(source.Wagon, options);
             }
             if (options.MapCollections)
             {

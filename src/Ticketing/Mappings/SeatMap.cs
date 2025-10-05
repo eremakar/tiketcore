@@ -34,7 +34,7 @@ namespace Ticketing.Mappings
             }
             if (options.MapObjects)
             {
-                result.Wagon = mapContext.TrainWagonMap.Map(source.Wagon, options);
+                result.Wagon = mapContext.WagonModelMap.Map(source.Wagon, options);
                 result.Type = mapContext.SeatTypeMap.Map(source.Type, options);
             }
             if (options.MapCollections)
@@ -62,8 +62,10 @@ namespace Ticketing.Mappings
             }
             if (options.MapObjects)
             {
-                result.Wagon = mapContext.TrainWagonMap.ReverseMap(source.Wagon, options);
-                result.Type = mapContext.SeatTypeMap.ReverseMap(source.Type, options);
+                if (source.WagonId == null)
+                    result.Wagon = mapContext.WagonModelMap.ReverseMap(source.Wagon, options);
+                if (source.TypeId == null)
+                    result.Type = mapContext.SeatTypeMap.ReverseMap(source.Type, options);
             }
             if (options.MapCollections)
             {

@@ -10,6 +10,7 @@ namespace Ticketing.Tarifications.Data.TicketDb.Entities
     public partial class Wagon : IEntityKey<long>
     {
         public long Id { get; set; }
+        public string? Name { get; set; }
         public int SeatCount { get; set; }
         [Column(TypeName = "jsonb")]
         public string? PictureS3 { get; set; }

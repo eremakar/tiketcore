@@ -12,5 +12,6 @@ namespace Ticketing.Models.Queries.TrainSchedules
         public SortOperand? Date { get; set; }
         public SortOperand? Active { get; set; }
         public SortOperand? TrainId { get; set; }
+        public SortOperand? SeatTariffId { get; set; }
     }
 }

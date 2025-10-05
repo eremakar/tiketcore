@@ -37,8 +37,8 @@ namespace Ticketing.UnitTests
             var service = CreateService(db);
 
             // Create test data
-            var wagon = new Wagon { Id = 1, SeatCount = 5, Type = new WagonType { Name = "TestWagon" }, Class = "Economy" };
-            db.Wagons!.Add(wagon);
+            var wagon = new WagonModel { Id = 1, SeatCount = 5, Type = new WagonType { Name = "TestWagon" }, ClassId = 1 };
+            db.WagonModels!.Add(wagon);
             
             var trainSchedule = new TrainSchedule { Id = 1, Active = true };
             db.TrainSchedules!.Add(trainSchedule);
@@ -99,8 +99,8 @@ namespace Ticketing.UnitTests
             var db = CreateInMemoryDb(nameof(GenerateSeatsAsync_ZeroSeatCount_ReturnsBadRequest));
             var service = CreateService(db);
 
-            var wagon = new Wagon { Id = 1, SeatCount = 0, Type = new WagonType { Name = "TestWagon" }, Class = "Economy" };
-            db.Wagons!.Add(wagon);
+            var wagon = new WagonModel { Id = 1, SeatCount = 0, Type = new WagonType { Name = "TestWagon" }, ClassId = 1 };
+            db.WagonModels!.Add(wagon);
             
             var trainSchedule = new TrainSchedule { Id = 1, Active = true };
             db.TrainSchedules!.Add(trainSchedule);
@@ -121,8 +121,8 @@ namespace Ticketing.UnitTests
             var db = CreateInMemoryDb(nameof(GenerateSeatsAsync_WithExistingSeats_SkipsDuplicates));
             var service = CreateService(db);
 
-            var wagon = new Wagon { Id = 1, SeatCount = 5, Type = new WagonType { Name = "TestWagon" }, Class = "Economy" };
-            db.Wagons!.Add(wagon);
+            var wagon = new WagonModel { Id = 1, SeatCount = 5, Type = new WagonType { Name = "TestWagon" }, ClassId = 1 };
+            db.WagonModels!.Add(wagon);
             
             var trainSchedule = new TrainSchedule { Id = 1, Active = true };
             db.TrainSchedules!.Add(trainSchedule);
@@ -157,8 +157,8 @@ namespace Ticketing.UnitTests
             var db = CreateInMemoryDb(nameof(GenerateSeatsAsync_AllSeatsExist_GeneratesNoNewSeats));
             var service = CreateService(db);
 
-            var wagon = new Wagon { Id = 1, SeatCount = 3, Type = new WagonType { Name = "TestWagon" }, Class = "Economy" };
-            db.Wagons!.Add(wagon);
+            var wagon = new WagonModel { Id = 1, SeatCount = 3, Type = new WagonType { Name = "TestWagon" }, ClassId = 1 };
+            db.WagonModels!.Add(wagon);
             
             var trainSchedule = new TrainSchedule { Id = 1, Active = true };
             db.TrainSchedules!.Add(trainSchedule);
@@ -192,8 +192,8 @@ namespace Ticketing.UnitTests
             var db = CreateInMemoryDb(nameof(GenerateSeatsAsync_LargeSeatCount_GeneratesCorrectly));
             var service = CreateService(db);
 
-            var wagon = new Wagon { Id = 1, SeatCount = 100, Type = new WagonType { Name = "TestWagon" }, Class = "Economy" };
-            db.Wagons!.Add(wagon);
+            var wagon = new WagonModel { Id = 1, SeatCount = 100, Type = new WagonType { Name = "TestWagon" }, ClassId = 1 };
+            db.WagonModels!.Add(wagon);
             
             var trainSchedule = new TrainSchedule { Id = 1, Active = true };
             db.TrainSchedules!.Add(trainSchedule);

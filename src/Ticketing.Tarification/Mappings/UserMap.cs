@@ -87,7 +87,8 @@ namespace Ticketing.Tarifications.Mappings
             }
             if (options.MapObjects)
             {
-                result.Role = mapContext.RoleMap.ReverseMap(source.Role, options);
+                if (source.RoleId == null)
+                    result.Role = mapContext.RoleMap.ReverseMap(source.Role, options);
             }
             if (options.MapCollections)
             {

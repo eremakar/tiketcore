@@ -12,6 +12,6 @@ namespace Ticketing.Tarifications.Models.Dtos
         public long? WagonId { get; set; }
 
         public TrainWagonsPlanDto? Plan { get; set; }
-        public WagonDto? Wagon { get; set; }
+        public WagonModelDto? Wagon { get; set; }
     }
 }

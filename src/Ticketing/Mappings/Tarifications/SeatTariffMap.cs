@@ -67,10 +67,14 @@ namespace Ticketing.Mappings.Tarifications
             }
             if (options.MapObjects)
             {
-                result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
-                result.BaseFare = mapContext.BaseFareMap.ReverseMap(source.BaseFare, options);
-                result.TrainCategory = mapContext.TrainCategoryMap.ReverseMap(source.TrainCategory, options);
-                result.Tariff = mapContext.TariffMap.ReverseMap(source.Tariff, options);
+                if (source.TrainId == null)
+                    result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
+                if (source.BaseFareId == null)
+                    result.BaseFare = mapContext.BaseFareMap.ReverseMap(source.BaseFare, options);
+                if (source.TrainCategoryId == null)
+                    result.TrainCategory = mapContext.TrainCategoryMap.ReverseMap(source.TrainCategory, options);
+                if (source.TariffId == null)
+                    result.Tariff = mapContext.TariffMap.ReverseMap(source.Tariff, options);
             }
             if (options.MapCollections)
             {

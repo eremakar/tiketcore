@@ -60,7 +60,7 @@ namespace Ticketing.Controllers
             return await SearchUsingEfAsync(query, _ => _.
                 Include(_ => _.TrainSchedule).ThenInclude(_ => _.Train).
                 Include(_ => _.Wagon).ThenInclude(_ => _.Type).
-                Include(_ => _.Seats));
+                Include(_ => _.Wagon).ThenInclude(_ => _.Seats));
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Ticketing.Controllers
             return await FindUsingEfAsync(key, _ => _.
                 Include(_ => _.TrainSchedule).ThenInclude(_ => _.Train).
                 Include(_ => _.Wagon).ThenInclude(_ => _.Type).
-                Include(_ => _.Seats));
+                Include(_ => _.Wagon).ThenInclude(_ => _.Seats));
         }
 
     }

@@ -11,11 +11,14 @@ namespace Ticketing.Services
 	public class TrainSchedulesService
 	{
 		private readonly TicketDbContext db;
+		private readonly WorkflowTaskService workflowTaskService;
 
 		public TrainSchedulesService(ILogger<TrainSchedulesService> logger,
-			TicketDbContext db)
+			TicketDbContext db,
+			WorkflowTaskService workflowTaskService)
 		{
 			this.db = db;
+			this.workflowTaskService = workflowTaskService;
 		}
 
 		public async Task<TrainScheduleActivationResponse> Activate(long scheduleId)
@@ -31,23 +34,24 @@ namespace Ticketing.Services
 			if (!routeId.HasValue)
 				throw new BadRequestException("Train has no route");
 
-		var routeStations = await db.Set<RouteStation>()
-			.Where(_ => _.RouteId == routeId)
-			.OrderBy(_ => _.Order)
-			.ToListAsync();
+			var routeStations = await db.Set<RouteStation>()
+				.Where(_ => _.RouteId == routeId)
+				.OrderBy(_ => _.Order)
+				.ToListAsync();
 
-		if (routeStations.Count < 2)
-			throw new BadRequestException("Route must contain at least 2 stations");
+			if (routeStations.Count < 2)
+				throw new BadRequestException("Route must contain at least 2 stations");
 
-		var stationPairs = new List<(long fromId, long toId, DateTime departureTime)>();
-		for (int i = 0; i < routeStations.Count - 1; i++)
-		{
-			var fromStation = routeStations[i];
-			var departureTime = fromStation.Departure.HasValue 
-				? schedule.Date.Date + (fromStation.Departure.Value - new DateTime(1900, 1, 1))
-				: schedule.Date.Date;
-			stationPairs.Add((fromStation.Id, routeStations[i + 1].Id, departureTime));
-		}
+			var stationPairs = new List<(long fromId, long toId, DateTime departureTime)>();
+			for (int i = 0; i < routeStations.Count - 1; i++)
+			{
+				var fromStation = routeStations[i];
+				var scheduleDate = schedule.Date.ToUtc();
+				var departureTime = fromStation.Departure.HasValue
+					? scheduleDate + (fromStation.Departure.Value - new DateTime(1900, 1, 1))
+					: scheduleDate;
+				stationPairs.Add((fromStation.Id, routeStations[i + 1].Id, departureTime));
+			}
 
 			var trainWagons = await db.Set<TrainWagon>()
 				.Include(_ => _.Wagon)
@@ -63,8 +67,10 @@ namespace Ticketing.Services
 				if (seatCount <= 0)
 					continue;
 
-				var wagonId = trainWagon.Id;
-				var existingSeats = await db.Set<Seat>().Where(_ => _.WagonId == wagonId).ToListAsync();
+				var wagonModelId = trainWagon.Wagon!.Id; // WagonModel.Id for Seat
+				var trainWagonId = trainWagon.Id; // TrainWagon.Id for SeatSegment
+
+				var existingSeats = await db.Set<Seat>().Where(_ => _.WagonId == wagonModelId).ToListAsync();
 				var existingNumbers = new HashSet<string>(existingSeats.Where(_ => _.Number != null).Select(_ => _.Number!));
 
 				var newSeats = new List<Seat>();
@@ -77,7 +83,7 @@ namespace Ticketing.Services
 						{
 							Number = num,
 							Class = 0,
-							WagonId = wagonId,
+							WagonId = wagonModelId,
 							TypeId = null
 						});
 					}
@@ -92,7 +98,7 @@ namespace Ticketing.Services
 				}
 
 				var existingSegments = await db.Set<SeatSegment>()
-					.Where(_ => _.TrainScheduleId == schedule.Id && _.WagonId == wagonId)
+					.Where(_ => _.TrainScheduleId == schedule.Id && _.WagonId == trainWagonId)
 					.Select(_ => new { _.SeatId, _.FromId, _.ToId })
 					.ToListAsync();
 
@@ -114,7 +120,7 @@ namespace Ticketing.Services
 								FromId = pair.fromId,
 								ToId = pair.toId,
 								TrainId = schedule.TrainId,
-								WagonId = wagonId,
+								WagonId = trainWagonId,
 								TrainScheduleId = schedule.Id,
 								Price = 0,
 								Departure = pair.departureTime
@@ -146,177 +152,246 @@ namespace Ticketing.Services
 
 		public async Task<TrainScheduleDatesResponseDto> CreateSchedulesByDatesAsync(TrainScheduleDatesRequestDto request)
 		{
-			// Get train with plan and wagons
-			var train = await db.Set<Train>()
-				.Include(_ => _.Plan)
-				.ThenInclude(_ => _.Wagons)
-				.ThenInclude(_ => _.Wagon)
-				.Include(_ => _.Route)
-				.FirstOrDefaultAsync(_ => _.Id == request.TrainId);
+			// Start task if provided
+			await workflowTaskService.StartTaskAsync(request.WorkflowTaskId);
 
-			if (train == null)
-				throw new BadRequestException("Train not found");
+			await workflowTaskService.LogAsync(
+				request.WorkflowTaskId,
+				$"Starting schedule creation for train {request.TrainId}, {request.Dates.Count} dates",
+				LogSeverity.Info);
 
-			if (train.Plan?.Wagons == null || !train.Plan.Wagons.Any())
-				throw new BadRequestException("Train has no plan wagons");
-
-			if (!train.RouteId.HasValue)
-				throw new BadRequestException("Train has no route");
-
-			// Get route stations for seat segments
-			var routeStations = await db.Set<RouteStation>()
-				.Where(_ => _.RouteId == train.RouteId)
-				.OrderBy(_ => _.Order)
-				.ToListAsync();
-
-			if (routeStations.Count < 2)
-				throw new BadRequestException("Route must contain at least 2 stations");
-
-			var response = new TrainScheduleDatesResponseDto();
-
-			foreach (var date in request.Dates)
+			try
 			{
-				// Check if schedule already exists for this date
-				var existingSchedule = await db.Set<TrainSchedule>()
-					.FirstOrDefaultAsync(_ => _.TrainId == request.TrainId && _.Date.Date == date.Date.ToUtc());
+				// Get train with plan and wagons
+				var train = await db.Set<Train>()
+					.Include(_ => _.Plan)
+					.ThenInclude(_ => _.Wagons)
+					.ThenInclude(_ => _.Wagon)
+					.Include(_ => _.Route)
+					.FirstOrDefaultAsync(_ => _.Id == request.TrainId);
 
-				if (existingSchedule == null)
+				if (train == null)
+					throw new BadRequestException("Train not found");
+
+				if (train.Plan?.Wagons == null || !train.Plan.Wagons.Any())
+					throw new BadRequestException("Train has no plan wagons");
+
+				if (!train.RouteId.HasValue)
+					throw new BadRequestException("Train has no route");
+
+				await workflowTaskService.LogAsync(
+					request.WorkflowTaskId,
+					$"Train validated: {train.Plan.Wagons.Count} wagons in plan",
+					LogSeverity.Info);
+
+				// Get route stations for seat segments
+				var routeStations = await db.Set<RouteStation>()
+					.Where(_ => _.RouteId == train.RouteId)
+					.OrderBy(_ => _.Order)
+					.ToListAsync();
+
+				if (routeStations.Count < 2)
+					throw new BadRequestException("Route must contain at least 2 stations");
+
+				// Pre-load all existing Seats for all wagons in plan
+				var wagonIds = train.Plan.Wagons.Select(_ => _.WagonId).ToList();
+				var allSeats = await db.Set<Seat>()
+					.Where(_ => wagonIds.Contains(_.WagonId))
+					.ToListAsync();
+
+				var seatsByWagonId = allSeats.GroupBy(_ => _.WagonId).ToDictionary(_ => _.Key, _ => _.ToList());
+
+				await workflowTaskService.LogAsync(
+					request.WorkflowTaskId,
+					$"Loaded seats for {wagonIds.Count} wagons, total {allSeats.Count} seats",
+					LogSeverity.Info);
+
+				// Create station pairs template (will apply date later)
+				var stationPairsTemplate = new List<(long? fromId, long? toId, TimeSpan? departureOffset)>();
+				for (int i = 0; i < routeStations.Count - 1; i++)
 				{
+					var fromStation = routeStations[i];
+					var departureOffset = fromStation.Departure.HasValue
+						? fromStation.Departure.Value - new DateTime(1900, 1, 1)
+						: TimeSpan.Zero;
+					stationPairsTemplate.Add((fromStation.Id, routeStations[i + 1].Id, departureOffset));
+				}
 
-					// Create TrainSchedule
-					var schedule = new TrainSchedule
-					{
-						Date = date.Date,
-						Active = false,
-						TrainId = request.TrainId
-					};
+				var response = new TrainScheduleDatesResponseDto();
+				var totalDates = request.Dates.Count;
+				var processedDates = 0;
 
-					db.Set<TrainSchedule>().Add(schedule);
-					await db.SaveChangesAsync();
-					existingSchedule = schedule;
-                    response.SchedulesCreated++;
-                }
-				response.ScheduleIds.Add(existingSchedule.Id);				
-
-				// Create TrainWagons based on plan wagons
-				foreach (var planWagon in train.Plan.Wagons)
+				foreach (var date in request.Dates)
 				{
-					// Check if train wagon already exists for this schedule
-					var existingTrainWagon = await db.Set<TrainWagon>()
-						.FirstOrDefaultAsync(_ => _.TrainScheduleId == existingSchedule.Id && _.Number == planWagon.Number);
+					// Check if schedule already exists for this date
+					var startDate = date.ToUtc();
+					var endDate = startDate.AddDays(1);
+					var existingSchedule = await db.Set<TrainSchedule>()
+						.FirstOrDefaultAsync(_ => _.TrainId == request.TrainId && startDate <= _.Date && _.Date < endDate);
 
-					TrainWagon trainWagon;
-					if (existingTrainWagon == null)
+					if (existingSchedule != null)
 					{
-						trainWagon = new TrainWagon
-						{
-							Number = planWagon.Number,
-							TrainScheduleId = existingSchedule.Id,
-							WagonId = planWagon.WagonId
-						};
+						// Schedule exists, skip creation
+						response.ScheduleIds.Add(existingSchedule.Id);
 
-						db.Set<TrainWagon>().Add(trainWagon);
-						await db.SaveChangesAsync();
-						response.TrainWagonsCreated++;
+						processedDates++;
+						var percent = (int)((processedDates / (double)totalDates) * 100);
+						await workflowTaskService.UpdateProgressAsync(
+							request.WorkflowTaskId,
+							percent,
+							$"Schedule for {startDate:yyyy-MM-dd} already exists (ID: {existingSchedule.Id})");
+						await workflowTaskService.LogAsync(
+							request.WorkflowTaskId,
+							$"Skipped {startDate:yyyy-MM-dd} - schedule already exists",
+							LogSeverity.Info);
+
+						continue;
 					}
-					else
+
+					// Validate seats exist for all wagons before creating schedule
+					foreach (var planWagon in train.Plan.Wagons)
 					{
-						trainWagon = existingTrainWagon;
+						if (!seatsByWagonId.TryGetValue(planWagon.WagonId, out var seats) || seats.Count == 0)
+							throw new BadRequestException($"No seats found for wagon {planWagon.WagonId}. Cannot create schedule.");
 					}
 
-					// Create Seats based on wagon seat count
-					var wagon = planWagon.Wagon;
-					if (wagon?.SeatCount > 0)
+					// Use execution strategy for transaction
+					var strategy = db.Database.CreateExecutionStrategy();
+					await strategy.ExecuteAsync(async () =>
 					{
-						// Get existing seats for this train wagon
-						var existingSeats = await db.Set<Seat>().Where(_ => _.WagonId == trainWagon.Id).ToListAsync();
-						var existingNumbers = new HashSet<string>(existingSeats.Where(_ => _.Number != null).Select(_ => _.Number!));
-
-						var newSeats = new List<Seat>();
-						for (int n = 1; n <= wagon.SeatCount; n++)
+						await using var transaction = await db.Database.BeginTransactionAsync();
+						try
 						{
-							var seatNumber = n.ToString();
-							if (!existingNumbers.Contains(seatNumber))
+							var trainWagonsToAdd = new List<TrainWagon>();
+							var seatSegmentsToAdd = new List<SeatSegment>();
+
+							// Create TrainSchedule
+							var newSchedule = new TrainSchedule
 							{
-								newSeats.Add(new Seat
+								Date = startDate,
+								Active = false,
+								TrainId = request.TrainId
+							};
+							db.Set<TrainSchedule>().Add(newSchedule);
+							await db.SaveChangesAsync(); // Get schedule ID
+
+							// Create TrainWagons
+							foreach (var planWagon in train.Plan.Wagons)
+							{
+								var trainWagon = new TrainWagon
 								{
-									Number = seatNumber,
-									Class = 0,
-									WagonId = trainWagon.Id,
-									TypeId = null
-								});
+									Number = planWagon.Number,
+									TrainScheduleId = newSchedule.Id,
+									WagonId = planWagon.WagonId
+								};
+								trainWagonsToAdd.Add(trainWagon);
 							}
-						}
 
-						if (newSeats.Count > 0)
-						{
-							await db.Set<Seat>().AddRangeAsync(newSeats);
-							await db.SaveChangesAsync();
-							response.SeatsCreated += newSeats.Count;
-							existingSeats.AddRange(newSeats);
-						}
+							await db.Set<TrainWagon>().AddRangeAsync(trainWagonsToAdd);
+							await db.SaveChangesAsync(); // Get wagon IDs
 
-						if (planWagon.Number == "10")
-						{
-
-						}
-
-						// Check existing seat segments for this train wagon
-						var existingSegments = await db.Set<SeatSegment>()
-							.Where(_ => _.TrainScheduleId == existingSchedule.Id && _.WagonId == trainWagon.Id)
-							.Select(_ => new { _.SeatId, _.FromId, _.ToId })
-							.ToListAsync();
-
-						var existingSegmentKeys = new HashSet<string>(existingSegments
-							.Where(_ => _.SeatId.HasValue && _.FromId.HasValue && _.ToId.HasValue)
-							.Select(_ => $"{_.SeatId.GetValueOrDefault()}:{_.FromId.GetValueOrDefault()}:{_.ToId.GetValueOrDefault()}"));
-
-						// Create station pairs with departure times for this specific schedule date
-						var stationPairs = new List<(long? fromId, long? toId, DateTime departureTime)>();
-						for (int i = 0; i < routeStations.Count - 1; i++)
-						{
-							var fromStation = routeStations[i];
-							var departureTime = fromStation.Departure.HasValue 
-								? date.Date + (fromStation.Departure.Value - new DateTime(1900, 1, 1))
-								: date.Date;
-							stationPairs.Add((fromStation.Id, routeStations[i + 1].Id, departureTime));
-						}
-
-						// Create SeatSegments for each seat and station pair
-						var toAdd = new List<SeatSegment>();
-						foreach (var seat in existingSeats)
-						{
-							foreach (var pair in stationPairs)
+							// Create SeatSegments for each wagon
+							for (int i = 0; i < train.Plan.Wagons.Count; i++)
 							{
-								var keyStr = $"{seat.Id}:{pair.fromId}:{pair.toId}";
-								if (!existingSegmentKeys.Contains(keyStr))
+								var planWagon = train.Plan.Wagons[i];
+								var trainWagon = trainWagonsToAdd[i];
+								var seats = seatsByWagonId[planWagon.WagonId];
+
+								foreach (var seat in seats)
 								{
-									toAdd.Add(new SeatSegment
+									foreach (var pair in stationPairsTemplate)
 									{
-										SeatId = seat.Id,
-										FromId = pair.fromId,
-										ToId = pair.toId,
-										TrainId = existingSchedule.TrainId,
-										WagonId = trainWagon.Id,
-										TrainScheduleId = existingSchedule.Id,
-										Price = 0,
-										Departure = pair.departureTime
-									});
+										var departureTime = startDate + (pair.departureOffset ?? TimeSpan.Zero);
+										seatSegmentsToAdd.Add(new SeatSegment
+										{
+											SeatId = seat.Id,
+											FromId = pair.fromId,
+											ToId = pair.toId,
+											TrainId = newSchedule.TrainId,
+											WagonId = trainWagon.Id,
+											TrainScheduleId = newSchedule.Id,
+											Price = 0,
+											Departure = departureTime
+										});
+									}
 								}
 							}
-						}
 
-						if (toAdd.Count > 0)
+							if (seatSegmentsToAdd.Count > 0)
+							{
+								await db.Set<SeatSegment>().AddRangeAsync(seatSegmentsToAdd);
+								await db.SaveChangesAsync();
+							}
+
+							// Commit transaction - all successful
+							await transaction.CommitAsync();
+
+							response.SchedulesCreated++;
+							response.TrainWagonsCreated += trainWagonsToAdd.Count;
+							response.SeatSegmentsCreated += seatSegmentsToAdd.Count;
+							response.ScheduleIds.Add(newSchedule.Id);
+
+							processedDates++;
+							var percent = (int)((processedDates / (double)totalDates) * 100);
+							await workflowTaskService.UpdateProgressAsync(
+								request.WorkflowTaskId,
+								percent,
+								$"Created schedule for {startDate:yyyy-MM-dd} (ID: {newSchedule.Id})");
+							await workflowTaskService.LogAsync(
+								request.WorkflowTaskId,
+								$"Schedule {newSchedule.Id} created for {startDate:yyyy-MM-dd}: {trainWagonsToAdd.Count} wagons, {seatSegmentsToAdd.Count} segments",
+								LogSeverity.Info,
+								data: new
+								{
+									ScheduleId = newSchedule.Id,
+									Date = startDate,
+									Wagons = trainWagonsToAdd.Count,
+									Segments = seatSegmentsToAdd.Count
+								});
+						}
+						catch (Exception ex)
 						{
-							await db.Set<SeatSegment>().AddRangeAsync(toAdd);
-							await db.SaveChangesAsync();
-							response.SeatSegmentsCreated += toAdd.Count;
-						}
-					}
-				}
-			}
+							await transaction.RollbackAsync();
 
-			return response;
+							await workflowTaskService.LogAsync(
+								request.WorkflowTaskId,
+								$"Failed to create schedule for {startDate:yyyy-MM-dd}: {ex.Message}",
+								LogSeverity.Error,
+								data: new { Date = startDate, Error = ex.Message });
+
+							throw; // Re-throw to fail fast
+						}
+					});
+				}
+
+				await workflowTaskService.LogAsync(
+					request.WorkflowTaskId,
+					$"Completed: {response.SchedulesCreated} schedules created, {response.TrainWagonsCreated} wagons, {response.SeatSegmentsCreated} segments",
+					LogSeverity.Info,
+					data: new
+					{
+						TotalDates = totalDates,
+						SchedulesCreated = response.SchedulesCreated,
+						TrainWagonsCreated = response.TrainWagonsCreated,
+						SeatSegmentsCreated = response.SeatSegmentsCreated,
+						ScheduleIds = response.ScheduleIds
+					});
+
+				await workflowTaskService.CompleteTaskAsync(
+					request.WorkflowTaskId,
+					output: response,
+					message: $"{response.SchedulesCreated} schedules created successfully");
+
+				return response;
+			}
+			catch (Exception ex)
+			{
+				await workflowTaskService.FailTaskAsync(
+					request.WorkflowTaskId,
+					$"Schedule creation failed: {ex.Message}",
+					ex);
+				throw;
+			}
 		}
 	}
 }

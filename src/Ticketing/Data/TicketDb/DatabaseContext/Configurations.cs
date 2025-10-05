@@ -1,5 +1,6 @@
 ﻿using Ticketing.Data.TicketDb.Entities;
 using Ticketing.Data.TicketDb.Entities.Tarifications;
+using Ticketing.Data.TicketDb.Entities.Workflows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -147,11 +148,11 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         }
     }
 
-    public class WagonsConfiguration : IEntityTypeConfiguration<Wagon>
+    public class WagonModelsConfiguration : IEntityTypeConfiguration<WagonModel>
     {
         public bool IsInMemoryDb { get; set; }
 
-        public void Configure(EntityTypeBuilder<Wagon> builder)
+        public void Configure(EntityTypeBuilder<WagonModel> builder)
         {
             builder.HasKey(x => x.Id);
 
@@ -171,6 +172,25 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         public void Configure(EntityTypeBuilder<WagonType> builder)
         {
             builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class CarriersConfiguration : IEntityTypeConfiguration<Carrier>
+    {
+        public bool IsInMemoryDb { get; set; }
+
+        public void Configure(EntityTypeBuilder<Carrier> builder)
+        {
+            builder.HasKey(x => x.Id);
+
+            if (!IsInMemoryDb)
+            {
+                builder.Property(_ => _.Logo).HasColumnType("jsonb");
+            }
+            else
+            {
+                builder.Ignore(_ => _.Logo);
+            }
         }
     }
 
@@ -321,6 +341,38 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         }
     }
 
+    public class TariffTrainCategoryItemsConfiguration : IEntityTypeConfiguration<TariffTrainCategoryItem>
+    {
+        public void Configure(EntityTypeBuilder<TariffTrainCategoryItem> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class TariffWagonItemsConfiguration : IEntityTypeConfiguration<TariffWagonItem>
+    {
+        public void Configure(EntityTypeBuilder<TariffWagonItem> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class TariffWagonTypeItemsConfiguration : IEntityTypeConfiguration<TariffWagonTypeItem>
+    {
+        public void Configure(EntityTypeBuilder<TariffWagonTypeItem> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class TariffSeatTypeItemsConfiguration : IEntityTypeConfiguration<TariffSeatTypeItem>
+    {
+        public void Configure(EntityTypeBuilder<TariffSeatTypeItem> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
     public class SeatTariffsConfiguration : IEntityTypeConfiguration<SeatTariff>
     {
         public void Configure(EntityTypeBuilder<SeatTariff> builder)
@@ -331,9 +383,20 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
 
     public class SeatTariffItemsConfiguration : IEntityTypeConfiguration<SeatTariffItem>
     {
+        public bool IsInMemoryDb { get; set; }
+
         public void Configure(EntityTypeBuilder<SeatTariffItem> builder)
         {
             builder.HasKey(x => x.Id);
+
+            if (!IsInMemoryDb)
+            {
+                builder.Property(_ => _.CalculationParameters).HasColumnType("jsonb");
+            }
+            else
+            {
+                builder.Ignore(_ => _.CalculationParameters);
+            }
         }
     }
 
@@ -342,6 +405,69 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         public void Configure(EntityTypeBuilder<SeatTariffHistory> builder)
         {
             builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class WorkflowTasksConfiguration : IEntityTypeConfiguration<WorkflowTask>
+    {
+        public bool IsInMemoryDb { get; set; }
+
+        public void Configure(EntityTypeBuilder<WorkflowTask> builder)
+        {
+            builder.HasKey(x => x.Id);
+
+            if (!IsInMemoryDb)
+            {
+                builder.Property(_ => _.Input).HasColumnType("jsonb");
+                builder.Property(_ => _.Output).HasColumnType("jsonb");
+                builder.Property(_ => _.Context).HasColumnType("jsonb");
+            }
+            else
+            {
+                builder.Ignore(_ => _.Input);
+                builder.Ignore(_ => _.Output);
+                builder.Ignore(_ => _.Context);
+            }
+            builder.HasOne(x => x.ParentTask)
+                .WithMany();
+        }
+    }
+
+    public class WorkflowTaskProgressesConfiguration : IEntityTypeConfiguration<WorkflowTaskProgress>
+    {
+        public bool IsInMemoryDb { get; set; }
+
+        public void Configure(EntityTypeBuilder<WorkflowTaskProgress> builder)
+        {
+            builder.HasKey(x => x.Id);
+
+            if (!IsInMemoryDb)
+            {
+                builder.Property(_ => _.Data).HasColumnType("jsonb");
+            }
+            else
+            {
+                builder.Ignore(_ => _.Data);
+            }
+        }
+    }
+
+    public class WorkflowTaskLogsConfiguration : IEntityTypeConfiguration<WorkflowTaskLog>
+    {
+        public bool IsInMemoryDb { get; set; }
+
+        public void Configure(EntityTypeBuilder<WorkflowTaskLog> builder)
+        {
+            builder.HasKey(x => x.Id);
+
+            if (!IsInMemoryDb)
+            {
+                builder.Property(_ => _.Data).HasColumnType("jsonb");
+            }
+            else
+            {
+                builder.Ignore(_ => _.Data);
+            }
         }
     }
 }

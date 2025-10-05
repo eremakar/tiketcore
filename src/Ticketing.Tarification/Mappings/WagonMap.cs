@@ -29,6 +29,7 @@ namespace Ticketing.Tarifications.Mappings
             result.Id = source.Id;
             if (options.MapProperties)
             {
+                result.Name = source.Name;
                 result.SeatCount = source.SeatCount;
                 result.PictureS3 = source.PictureS3;
                 result.Class = source.Class;
@@ -56,6 +57,7 @@ namespace Ticketing.Tarifications.Mappings
             result.Id = source.Id;
             if (options.MapProperties)
             {
+                result.Name = source.Name;
                 result.SeatCount = source.SeatCount;
                 if (source.PictureS3 != null)
                     result.PictureS3 = JsonConvert.SerializeObject(source.PictureS3);
@@ -64,7 +66,8 @@ namespace Ticketing.Tarifications.Mappings
             }
             if (options.MapObjects)
             {
-                result.Type = mapContext.WagonTypeMap.ReverseMap(source.Type, options);
+                if (source.TypeId == null)
+                    result.Type = mapContext.WagonTypeMap.ReverseMap(source.Type, options);
             }
             if (options.MapCollections)
             {
@@ -83,6 +86,7 @@ namespace Ticketing.Tarifications.Mappings
             destination.Id = source.Id;
             if (options.MapProperties)
             {
+                destination.Name = source.Name;
                 destination.SeatCount = source.SeatCount;
                 destination.PictureS3 = JsonHelper.NormalizeSafe(source.PictureS3);
                 destination.Class = source.Class;

@@ -44,13 +44,13 @@ namespace Ticketing.UnitTests
             );
 
             // Wagon and train-wagon (capacity 2 seats)
-            var wagon = new Wagon { Id = 2001, SeatCount = 2 };
-            db.Wagons!.Add(wagon);
+            var wagon = new WagonModel { Id = 2001, SeatCount = 2 };
+            db.WagonModels!.Add(wagon);
             var trainWagon = new TrainWagon { Id = 3001, TrainScheduleId = schedule.Id, WagonId = wagon.Id };
             db.TrainWagons!.Add(trainWagon);
             await db.SaveChangesAsync();
 
-            var service = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+            var service = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
             var resp = await service.Activate(schedule.Id);
 
             resp.ScheduleId.Should().Be(schedule.Id);
@@ -87,8 +87,8 @@ namespace Ticketing.UnitTests
                 new RouteStation { Id = 2001, RouteId = train.RouteId, Order = 1 },
                 new RouteStation { Id = 2002, RouteId = train.RouteId, Order = 2 }
             );
-            var wagon = new Wagon { Id = 2201, SeatCount = 1 };
-            db.Wagons!.Add(wagon);
+            var wagon = new WagonModel { Id = 2201, SeatCount = 1 };
+            db.WagonModels!.Add(wagon);
             var trainWagon = new TrainWagon { Id = 2301, TrainScheduleId = schedule.Id, WagonId = wagon.Id };
             db.TrainWagons!.Add(trainWagon);
             await db.SaveChangesAsync();
@@ -109,7 +109,7 @@ namespace Ticketing.UnitTests
             });
             await db.SaveChangesAsync();
 
-            var service = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+            var service = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
             var resp = await service.Activate(schedule.Id);
 
             resp.SeatsCreated.Should().Be(0);
@@ -127,7 +127,7 @@ namespace Ticketing.UnitTests
             db.TrainSchedules!.Add(schedule);
             await db.SaveChangesAsync();
 
-            var service = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+            var service = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
              var act = () => service.Activate(schedule.Id);
              await act.Should().ThrowAsync<BadRequestException>();
          }
@@ -151,13 +151,13 @@ namespace Ticketing.UnitTests
              );
 
              // Wagon and train-wagon
-             var wagon = new Wagon { Id = 4001, SeatCount = 1 };
-             db.Wagons!.Add(wagon);
+             var wagon = new WagonModel { Id = 4001, SeatCount = 1 };
+             db.WagonModels!.Add(wagon);
              var trainWagon = new TrainWagon { Id = 4001, TrainScheduleId = schedule.Id, WagonId = wagon.Id };
              db.TrainWagons!.Add(trainWagon);
              await db.SaveChangesAsync();
 
-             var service = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+             var service = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
              await service.Activate(schedule.Id);
 
              // Check that seats were created first
@@ -194,8 +194,8 @@ namespace Ticketing.UnitTests
              var db = CreateInMemoryDb(nameof(CreateSchedulesByDatesAsync_SetsCorrectDepartureTimes));
 
              // Wagon first
-             var wagon = new Wagon { Id = 5001, SeatCount = 2 };
-             db.Wagons!.Add(wagon);
+             var wagon = new WagonModel { Id = 5001, SeatCount = 2 };
+             db.WagonModels!.Add(wagon);
 
              // Train plan first
              var plan = new TrainWagonsPlan { Id = 5001, TrainId = 5 };
@@ -217,7 +217,7 @@ namespace Ticketing.UnitTests
 
              await db.SaveChangesAsync();
 
-             var service = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+             var service = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
 
              var request = new TrainScheduleDatesRequestDto
              {

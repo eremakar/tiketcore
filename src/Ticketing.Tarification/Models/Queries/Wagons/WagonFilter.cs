@@ -9,6 +9,7 @@ namespace Ticketing.Tarifications.Models.Queries.Wagons
     public partial class WagonFilter : FilterBase<Wagon>
     {
         public FilterOperand<long>? Id { get; set; }
+        public FilterOperand<string>? Name { get; set; }
         public FilterOperand<int>? SeatCount { get; set; }
         public FilterOperand<object>? PictureS3 { get; set; }
         public FilterOperand<string>? Class { get; set; }

@@ -1,5 +1,4 @@
-﻿using Ticketing.Models.Dtos;
-
+﻿
 namespace Ticketing.Models.Dtos.Tarifications
 {
     /// <summary>
@@ -9,14 +8,13 @@ namespace Ticketing.Models.Dtos.Tarifications
     {
         public long Id { get; set; }
         public string? Name { get; set; }
-        public double IndexCoefficient { get; set; }
         public double VAT { get; set; }
         public long? BaseFareId { get; set; }
-        public long? TrainCategoryId { get; set; }
-        public long? WagonId { get; set; }
 
         public BaseFareDto? BaseFare { get; set; }
-        public TrainCategoryDto? TrainCategory { get; set; }
-        public WagonDto? Wagon { get; set; }
+
+        public List<TariffTrainCategoryItemDto>? TrainCategories { get; set; }
+        public List<TariffWagonItemDto>? Wagons { get; set; }
+        public List<TariffWagonTypeItemDto>? WagonTypes { get; set; }
     }
 }

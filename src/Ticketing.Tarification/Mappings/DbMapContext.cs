@@ -18,7 +18,7 @@ namespace Ticketing.Tarifications.Mappings
         public TrainWagonMap TrainWagonMap { get; }
         public TrainWagonsPlanMap TrainWagonsPlanMap { get; }
         public TrainWagonsPlanWagonMap TrainWagonsPlanWagonMap { get; }
-        public WagonMap WagonMap { get; }
+        public WagonModelMap WagonModelMap { get; }
         public WagonTypeMap WagonTypeMap { get; }
         public ServiceMap ServiceMap { get; }
         public SeatTypeMap SeatTypeMap { get; }
@@ -37,6 +37,10 @@ namespace Ticketing.Tarifications.Mappings
         public SeasonMap SeasonMap { get; }
         public BaseFareMap BaseFareMap { get; }
         public TariffMap TariffMap { get; }
+        public TariffTrainCategoryItemMap TariffTrainCategoryItemMap { get; }
+        public TariffWagonItemMap TariffWagonItemMap { get; }
+        public TariffWagonTypeItemMap TariffWagonTypeItemMap { get; }
+        public TariffSeatTypeItemMap TariffSeatTypeItemMap { get; }
         public SeatTariffMap SeatTariffMap { get; }
         public SeatTariffItemMap SeatTariffItemMap { get; }
         public SeatTariffHistoryMap SeatTariffHistoryMap { get; }
@@ -57,7 +61,7 @@ namespace Ticketing.Tarifications.Mappings
             TrainWagonMap = new TrainWagonMap(this);
             TrainWagonsPlanMap = new TrainWagonsPlanMap(this);
             TrainWagonsPlanWagonMap = new TrainWagonsPlanWagonMap(this);
-            WagonMap = new WagonMap(this);
+            WagonModelMap = new WagonModelMap(this);
             WagonTypeMap = new WagonTypeMap(this);
             ServiceMap = new ServiceMap(this);
             SeatTypeMap = new SeatTypeMap(this);
@@ -76,6 +80,10 @@ namespace Ticketing.Tarifications.Mappings
             SeasonMap = new SeasonMap(this);
             BaseFareMap = new BaseFareMap(this);
             TariffMap = new TariffMap(this);
+            TariffTrainCategoryItemMap = new TariffTrainCategoryItemMap(this);
+            TariffWagonItemMap = new TariffWagonItemMap(this);
+            TariffWagonTypeItemMap = new TariffWagonTypeItemMap(this);
+            TariffSeatTypeItemMap = new TariffSeatTypeItemMap(this);
             SeatTariffMap = new SeatTariffMap(this);
             SeatTariffItemMap = new SeatTariffItemMap(this);
             SeatTariffHistoryMap = new SeatTariffHistoryMap(this);

@@ -1,4 +1,5 @@
 ﻿using Ticketing.Mappings.Tarifications;
+using Ticketing.Mappings.Workflows;
 
 namespace Ticketing.Mappings
 {
@@ -18,8 +19,9 @@ namespace Ticketing.Mappings
         public TrainWagonMap TrainWagonMap { get; }
         public TrainWagonsPlanMap TrainWagonsPlanMap { get; }
         public TrainWagonsPlanWagonMap TrainWagonsPlanWagonMap { get; }
-        public WagonMap WagonMap { get; }
+        public WagonModelMap WagonModelMap { get; }
         public WagonTypeMap WagonTypeMap { get; }
+        public CarrierMap CarrierMap { get; }
         public ServiceMap ServiceMap { get; }
         public SeatTypeMap SeatTypeMap { get; }
         public SeatMap SeatMap { get; }
@@ -37,9 +39,16 @@ namespace Ticketing.Mappings
         public SeasonMap SeasonMap { get; }
         public BaseFareMap BaseFareMap { get; }
         public TariffMap TariffMap { get; }
+        public TariffTrainCategoryItemMap TariffTrainCategoryItemMap { get; }
+        public TariffWagonItemMap TariffWagonItemMap { get; }
+        public TariffWagonTypeItemMap TariffWagonTypeItemMap { get; }
+        public TariffSeatTypeItemMap TariffSeatTypeItemMap { get; }
         public SeatTariffMap SeatTariffMap { get; }
         public SeatTariffItemMap SeatTariffItemMap { get; }
         public SeatTariffHistoryMap SeatTariffHistoryMap { get; }
+        public WorkflowTaskMap WorkflowTaskMap { get; }
+        public WorkflowTaskProgressMap WorkflowTaskProgressMap { get; }
+        public WorkflowTaskLogMap WorkflowTaskLogMap { get; }
 
         public DbMapContext()
         {
@@ -57,8 +66,9 @@ namespace Ticketing.Mappings
             TrainWagonMap = new TrainWagonMap(this);
             TrainWagonsPlanMap = new TrainWagonsPlanMap(this);
             TrainWagonsPlanWagonMap = new TrainWagonsPlanWagonMap(this);
-            WagonMap = new WagonMap(this);
+            WagonModelMap = new WagonModelMap(this);
             WagonTypeMap = new WagonTypeMap(this);
+            CarrierMap = new CarrierMap(this);
             ServiceMap = new ServiceMap(this);
             SeatTypeMap = new SeatTypeMap(this);
             SeatMap = new SeatMap(this);
@@ -76,9 +86,16 @@ namespace Ticketing.Mappings
             SeasonMap = new SeasonMap(this);
             BaseFareMap = new BaseFareMap(this);
             TariffMap = new TariffMap(this);
+            TariffTrainCategoryItemMap = new TariffTrainCategoryItemMap(this);
+            TariffWagonItemMap = new TariffWagonItemMap(this);
+            TariffWagonTypeItemMap = new TariffWagonTypeItemMap(this);
+            TariffSeatTypeItemMap = new TariffSeatTypeItemMap(this);
             SeatTariffMap = new SeatTariffMap(this);
             SeatTariffItemMap = new SeatTariffItemMap(this);
             SeatTariffHistoryMap = new SeatTariffHistoryMap(this);
+            WorkflowTaskMap = new WorkflowTaskMap(this);
+            WorkflowTaskProgressMap = new WorkflowTaskProgressMap(this);
+            WorkflowTaskLogMap = new WorkflowTaskLogMap(this);
         }
     }
 }

@@ -57,7 +57,8 @@ namespace Ticketing.Tarifications.Mappings
             }
             if (options.MapObjects)
             {
-                result.Station = mapContext.StationMap.ReverseMap(source.Station, options);
+                if (source.StationId == null)
+                    result.Station = mapContext.StationMap.ReverseMap(source.Station, options);
             }
             if (options.MapCollections)
             {

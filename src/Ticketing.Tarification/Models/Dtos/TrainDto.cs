@@ -1,4 +1,5 @@
-﻿
+﻿using Ticketing.Tarifications.Models.Dtos.Tarifications;
+
 namespace Ticketing.Tarifications.Models.Dtos
 {
     /// <summary>
@@ -20,10 +21,12 @@ namespace Ticketing.Tarifications.Models.Dtos
         public long? ToId { get; set; }
         public long? RouteId { get; set; }
         public long? PlanId { get; set; }
+        public long? CategoryId { get; set; }
 
         public StationDto? From { get; set; }
         public StationDto? To { get; set; }
         public RouteDto? Route { get; set; }
         public TrainWagonsPlanDto? Plan { get; set; }
+        public TrainCategoryDto? Category { get; set; }
     }
 }

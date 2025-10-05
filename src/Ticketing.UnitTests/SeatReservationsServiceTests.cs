@@ -36,7 +36,7 @@ namespace Ticketing.UnitTests
             var trainWagonId = await SeedTrainWagonWithCapacityAsync(db, trainScheduleId, seatCapacity: 2);
 
             // activate to generate seats and segments
-            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
             await tsService.Activate(trainScheduleId);
 
             // pick first seat in wagon
@@ -64,7 +64,7 @@ namespace Ticketing.UnitTests
             var trainScheduleId = 101L;
             await SeedTrainWithScheduleAndRouteAsync(db, trainScheduleId, (1, 1), (2, 2), (3, 3));
             var trainWagonId = await SeedTrainWagonWithCapacityAsync(db, trainScheduleId, seatCapacity: 2);
-            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
             await tsService.Activate(trainScheduleId);
             var seatId = await db.Seats!.Where(s => s.WagonId == trainWagonId).Select(s => s.Id).FirstAsync();
 
@@ -87,7 +87,7 @@ namespace Ticketing.UnitTests
             var trainScheduleId = 102L;
             await SeedTrainWithScheduleAndRouteAsync(db, trainScheduleId, (1, 1), (2, 2), (3, 3));
             var trainWagonId = await SeedTrainWagonWithCapacityAsync(db, trainScheduleId, seatCapacity: 2);
-            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
             await tsService.Activate(trainScheduleId);
             var seatId = await db.Seats!.Where(s => s.WagonId == trainWagonId).Select(s => s.Id).FirstAsync();
 
@@ -110,7 +110,7 @@ namespace Ticketing.UnitTests
             var trainScheduleId = 103L;
             await SeedTrainWithScheduleAndRouteAsync(db, trainScheduleId, (1, 1), (2, 2), (3, 3));
             var trainWagonId = await SeedTrainWagonWithCapacityAsync(db, trainScheduleId, seatCapacity: 1);
-            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
             await tsService.Activate(trainScheduleId);
             var seatId = await db.Seats!.Where(s => s.WagonId == trainWagonId).Select(s => s.Id).FirstAsync();
 
@@ -133,7 +133,7 @@ namespace Ticketing.UnitTests
             // seed route for different ids (10,20)
             await SeedTrainWithScheduleAndRouteAsync(db, trainScheduleId, (10, 1), (20, 2));
             var trainWagonId = await SeedTrainWagonWithCapacityAsync(db, trainScheduleId, seatCapacity: 1);
-            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
             await tsService.Activate(trainScheduleId);
             var seatId = await db.Seats!.Where(s => s.WagonId == trainWagonId).Select(s => s.Id).FirstAsync();
 
@@ -151,7 +151,7 @@ namespace Ticketing.UnitTests
             // create route that doesn't match fake seatId
             await SeedTrainWithScheduleAndRouteAsync(db, trainScheduleId, (1, 1), (2, 2));
             var trainWagonId = await SeedTrainWagonWithCapacityAsync(db, trainScheduleId, seatCapacity: 1);
-            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db);
+            var tsService = new TrainSchedulesService(new NullLogger<TrainSchedulesService>(), db, new WorkflowTaskService(db, new NullLogger<WorkflowTaskService>()));
             await tsService.Activate(trainScheduleId);
             var fakeSeatId = 999999L; // seat does not exist -> no segments
 
@@ -217,8 +217,8 @@ namespace Ticketing.UnitTests
                 db.TrainSchedules!.Add(schedule);
             }
 
-            var wagon = new Wagon { Id = 9000 + trainScheduleId, SeatCount = seatCapacity };
-            db.Wagons!.Add(wagon);
+            var wagon = new WagonModel { Id = 9000 + trainScheduleId, SeatCount = seatCapacity };
+            db.WagonModels!.Add(wagon);
 
             var trainWagon = new TrainWagon
             {

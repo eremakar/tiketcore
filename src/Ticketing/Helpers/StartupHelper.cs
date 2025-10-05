@@ -1,5 +1,6 @@
 ﻿using Ticketing.Mappings;
 using Ticketing.Mappings.Tarifications;
+using Ticketing.Mappings.Workflows;
 using Ticketing.Services;
 
 namespace Ticketing.Helpers
@@ -26,8 +27,9 @@ namespace Ticketing.Helpers
             services.AddScoped<TrainWagonMap>();
             services.AddScoped<TrainWagonsPlanMap>();
             services.AddScoped<TrainWagonsPlanWagonMap>();
-            services.AddScoped<WagonMap>();
+            services.AddScoped<WagonModelMap>();
             services.AddScoped<WagonTypeMap>();
+            services.AddScoped<CarrierMap>();
             services.AddScoped<ServiceMap>();
             services.AddScoped<SeatTypeMap>();
             services.AddScoped<SeatMap>();
@@ -45,9 +47,16 @@ namespace Ticketing.Helpers
             services.AddScoped<SeasonMap>();
             services.AddScoped<BaseFareMap>();
             services.AddScoped<TariffMap>();
+            services.AddScoped<TariffTrainCategoryItemMap>();
+            services.AddScoped<TariffWagonItemMap>();
+            services.AddScoped<TariffWagonTypeItemMap>();
+            services.AddScoped<TariffSeatTypeItemMap>();
             services.AddScoped<SeatTariffMap>();
             services.AddScoped<SeatTariffItemMap>();
             services.AddScoped<SeatTariffHistoryMap>();
+            services.AddScoped<WorkflowTaskMap>();
+            services.AddScoped<WorkflowTaskProgressMap>();
+            services.AddScoped<WorkflowTaskLogMap>();
         }
 
         public static void AddServices(this WebApplicationBuilder source)
@@ -60,6 +69,8 @@ namespace Ticketing.Helpers
             services.AddScoped<SeatReservationsService>();
             services.AddScoped<TrainSchedulesService>();
             services.AddScoped<TrainWagonsService>();
+            services.AddScoped<WagonModelsService>();
+            services.AddScoped<WorkflowTaskService>();
 
         }
 

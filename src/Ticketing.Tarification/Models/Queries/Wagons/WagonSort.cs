@@ -9,6 +9,7 @@ namespace Ticketing.Tarifications.Models.Queries.Wagons
     public partial class WagonSort : SortBase<Wagon>
     {
         public SortOperand? Id { get; set; }
+        public SortOperand? Name { get; set; }
         public SortOperand? SeatCount { get; set; }
         public SortOperand? PictureS3 { get; set; }
         public SortOperand? Class { get; set; }

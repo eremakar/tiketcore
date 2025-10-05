@@ -7,6 +7,7 @@ namespace Ticketing.Models.Dtos
     public partial class WagonDto
     {
         public long Id { get; set; }
+        public string? Name { get; set; }
         public int SeatCount { get; set; }
         public object? PictureS3 { get; set; }
         public string? Class { get; set; }

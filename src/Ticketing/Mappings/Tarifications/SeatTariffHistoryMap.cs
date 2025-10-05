@@ -80,13 +80,20 @@ namespace Ticketing.Mappings.Tarifications
             }
             if (options.MapObjects)
             {
-                result.BaseFare = mapContext.BaseFareMap.ReverseMap(source.BaseFare, options);
-                result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
-                result.TrainCategory = mapContext.TrainCategoryMap.ReverseMap(source.TrainCategory, options);
-                result.WagonClass = mapContext.WagonClassMap.ReverseMap(source.WagonClass, options);
-                result.Season = mapContext.SeasonMap.ReverseMap(source.Season, options);
-                result.SeatType = mapContext.SeatTypeMap.ReverseMap(source.SeatType, options);
-                result.Connection = mapContext.ConnectionMap.ReverseMap(source.Connection, options);
+                if (source.BaseFareId == null)
+                    result.BaseFare = mapContext.BaseFareMap.ReverseMap(source.BaseFare, options);
+                if (source.TrainId == null)
+                    result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
+                if (source.TrainCategoryId == null)
+                    result.TrainCategory = mapContext.TrainCategoryMap.ReverseMap(source.TrainCategory, options);
+                if (source.WagonClassId == null)
+                    result.WagonClass = mapContext.WagonClassMap.ReverseMap(source.WagonClass, options);
+                if (source.SeasonId == null)
+                    result.Season = mapContext.SeasonMap.ReverseMap(source.Season, options);
+                if (source.SeatTypeId == null)
+                    result.SeatType = mapContext.SeatTypeMap.ReverseMap(source.SeatType, options);
+                if (source.ConnectionId == null)
+                    result.Connection = mapContext.ConnectionMap.ReverseMap(source.Connection, options);
             }
             if (options.MapCollections)
             {

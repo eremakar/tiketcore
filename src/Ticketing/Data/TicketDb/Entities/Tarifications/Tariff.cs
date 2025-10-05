@@ -1,5 +1,5 @@
 ﻿using Data.Repository;
-using Ticketing.Data.TicketDb.Entities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ticketing.Data.TicketDb.Entities.Tarifications
 {
@@ -10,14 +10,16 @@ namespace Ticketing.Data.TicketDb.Entities.Tarifications
     {
         public long Id { get; set; }
         public string? Name { get; set; }
-        public double IndexCoefficient { get; set; }
         public double VAT { get; set; }
         public long? BaseFareId { get; set; }
-        public long? TrainCategoryId { get; set; }
-        public long? WagonId { get; set; }
 
         public BaseFare? BaseFare { get; set; }
-        public TrainCategory? TrainCategory { get; set; }
-        public Wagon? Wagon { get; set; }
+
+        [InverseProperty("Tariff")]
+        public List<TariffTrainCategoryItem>? TrainCategories { get; set; }
+        [InverseProperty("Tariff")]
+        public List<TariffWagonItem>? Wagons { get; set; }
+        [InverseProperty("Tariff")]
+        public List<TariffWagonTypeItem>? WagonTypes { get; set; }
     }
 }

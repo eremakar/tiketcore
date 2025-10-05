@@ -13,6 +13,6 @@ namespace Ticketing.Tarifications.Data.TicketDb.Entities
         public long? WagonId { get; set; }
 
         public TrainWagonsPlan? Plan { get; set; }
-        public Wagon? Wagon { get; set; }
+        public WagonModel? Wagon { get; set; }
     }
 }

@@ -31,10 +31,12 @@ namespace Ticketing.Mappings
                 result.Date = source.Date;
                 result.Active = source.Active;
                 result.TrainId = source.TrainId;
+                result.SeatTariffId = source.SeatTariffId;
             }
             if (options.MapObjects)
             {
                 result.Train = mapContext.TrainMap.Map(source.Train, options);
+                result.SeatTariff = mapContext.SeatTariffMap.Map(source.SeatTariff, options);
             }
             if (options.MapCollections)
             {
@@ -57,10 +59,14 @@ namespace Ticketing.Mappings
                 result.Date = source.Date.ToUtc();
                 result.Active = source.Active;
                 result.TrainId = source.TrainId;
+                result.SeatTariffId = source.SeatTariffId;
             }
             if (options.MapObjects)
             {
-                result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
+                if (source.TrainId == null)
+                    result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
+                if (source.SeatTariffId == null)
+                    result.SeatTariff = mapContext.SeatTariffMap.ReverseMap(source.SeatTariff, options);
             }
             if (options.MapCollections)
             {
@@ -82,6 +88,7 @@ namespace Ticketing.Mappings
                 destination.Date = source.Date;
                 destination.Active = source.Active;
                 destination.TrainId = source.TrainId;
+                destination.SeatTariffId = source.SeatTariffId;
             }
             if (options.MapObjects)
             {

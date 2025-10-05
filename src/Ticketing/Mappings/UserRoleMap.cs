@@ -55,8 +55,10 @@ namespace Ticketing.Mappings
             }
             if (options.MapObjects)
             {
-                result.User = mapContext.UserMap.ReverseMap(source.User, options);
-                result.Role = mapContext.RoleMap.ReverseMap(source.Role, options);
+                if (source.UserId == null)
+                    result.User = mapContext.UserMap.ReverseMap(source.User, options);
+                if (source.RoleId == null)
+                    result.Role = mapContext.RoleMap.ReverseMap(source.Role, options);
             }
             if (options.MapCollections)
             {

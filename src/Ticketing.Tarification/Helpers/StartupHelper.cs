@@ -26,7 +26,7 @@ namespace Ticketing.Tarifications.Helpers
             services.AddScoped<TrainWagonMap>();
             services.AddScoped<TrainWagonsPlanMap>();
             services.AddScoped<TrainWagonsPlanWagonMap>();
-            services.AddScoped<WagonMap>();
+            services.AddScoped<WagonModelMap>();
             services.AddScoped<WagonTypeMap>();
             services.AddScoped<ServiceMap>();
             services.AddScoped<SeatTypeMap>();
@@ -45,6 +45,10 @@ namespace Ticketing.Tarifications.Helpers
             services.AddScoped<SeasonMap>();
             services.AddScoped<BaseFareMap>();
             services.AddScoped<TariffMap>();
+            services.AddScoped<TariffTrainCategoryItemMap>();
+            services.AddScoped<TariffWagonItemMap>();
+            services.AddScoped<TariffWagonTypeItemMap>();
+            services.AddScoped<TariffSeatTypeItemMap>();
             services.AddScoped<SeatTariffMap>();
             services.AddScoped<SeatTariffItemMap>();
             services.AddScoped<SeatTariffHistoryMap>();

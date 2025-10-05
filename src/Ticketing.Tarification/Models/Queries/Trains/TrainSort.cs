@@ -22,5 +22,6 @@ namespace Ticketing.Tarifications.Models.Queries.Trains
         public SortOperand? ToId { get; set; }
         public SortOperand? RouteId { get; set; }
         public SortOperand? PlanId { get; set; }
+        public SortOperand? CategoryId { get; set; }
     }
 }

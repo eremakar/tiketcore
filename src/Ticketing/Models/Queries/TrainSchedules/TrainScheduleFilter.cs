@@ -12,5 +12,6 @@ namespace Ticketing.Models.Queries.TrainSchedules
         public FilterOperand<DateTime>? Date { get; set; }
         public FilterOperand<bool>? Active { get; set; }
         public FilterOperand<long?>? TrainId { get; set; }
+        public FilterOperand<long?>? SeatTariffId { get; set; }
     }
 }

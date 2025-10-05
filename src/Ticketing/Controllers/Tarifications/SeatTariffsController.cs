@@ -54,7 +54,6 @@ namespace Ticketing.Controllers.Tarifications
                 Include(_ => _.Train).
                 Include(_ => _.BaseFare).
                 Include(_ => _.TrainCategory).
-                Include(_ => _.Items).
                 Include(_ => _.Tariff));
         }
 
@@ -77,7 +76,6 @@ namespace Ticketing.Controllers.Tarifications
                 Include(_ => _.Train).
                 Include(_ => _.BaseFare).
                 Include(_ => _.TrainCategory).
-                Include(_ => _.Items).
                 Include(_ => _.Tariff));
         }
 

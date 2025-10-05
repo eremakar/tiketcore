@@ -80,12 +80,18 @@ namespace Ticketing.Tarifications.Mappings
             }
             if (options.MapObjects)
             {
-                result.From = mapContext.RouteStationMap.ReverseMap(source.From, options);
-                result.To = mapContext.RouteStationMap.ReverseMap(source.To, options);
-                result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
-                result.Wagon = mapContext.TrainWagonMap.ReverseMap(source.Wagon, options);
-                result.Seat = mapContext.SeatMap.ReverseMap(source.Seat, options);
-                result.TrainSchedule = mapContext.TrainScheduleMap.ReverseMap(source.TrainSchedule, options);
+                if (source.FromId == null)
+                    result.From = mapContext.RouteStationMap.ReverseMap(source.From, options);
+                if (source.ToId == null)
+                    result.To = mapContext.RouteStationMap.ReverseMap(source.To, options);
+                if (source.TrainId == null)
+                    result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
+                if (source.WagonId == null)
+                    result.Wagon = mapContext.TrainWagonMap.ReverseMap(source.Wagon, options);
+                if (source.SeatId == null)
+                    result.Seat = mapContext.SeatMap.ReverseMap(source.Seat, options);
+                if (source.TrainScheduleId == null)
+                    result.TrainSchedule = mapContext.TrainScheduleMap.ReverseMap(source.TrainSchedule, options);
             }
             if (options.MapCollections)
             {

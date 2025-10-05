@@ -147,11 +147,11 @@ namespace Ticketing.Tarifications.Data.TicketDb.DatabaseContext
         }
     }
 
-    public class WagonsConfiguration : IEntityTypeConfiguration<Wagon>
+    public class WagonModelsConfiguration : IEntityTypeConfiguration<WagonModel>
     {
         public bool IsInMemoryDb { get; set; }
 
-        public void Configure(EntityTypeBuilder<Wagon> builder)
+        public void Configure(EntityTypeBuilder<WagonModel> builder)
         {
             builder.HasKey(x => x.Id);
 
@@ -316,6 +316,38 @@ namespace Ticketing.Tarifications.Data.TicketDb.DatabaseContext
     public class TariffsConfiguration : IEntityTypeConfiguration<Tariff>
     {
         public void Configure(EntityTypeBuilder<Tariff> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class TariffTrainCategoryItemsConfiguration : IEntityTypeConfiguration<TariffTrainCategoryItem>
+    {
+        public void Configure(EntityTypeBuilder<TariffTrainCategoryItem> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class TariffWagonItemsConfiguration : IEntityTypeConfiguration<TariffWagonItem>
+    {
+        public void Configure(EntityTypeBuilder<TariffWagonItem> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class TariffWagonTypeItemsConfiguration : IEntityTypeConfiguration<TariffWagonTypeItem>
+    {
+        public void Configure(EntityTypeBuilder<TariffWagonTypeItem> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class TariffSeatTypeItemsConfiguration : IEntityTypeConfiguration<TariffSeatTypeItem>
+    {
+        public void Configure(EntityTypeBuilder<TariffSeatTypeItem> builder)
         {
             builder.HasKey(x => x.Id);
         }

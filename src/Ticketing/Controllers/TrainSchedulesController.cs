@@ -56,7 +56,8 @@ namespace Ticketing.Controllers
         public override async Task<PagedList<TrainScheduleDto>> SearchAsync([FromBody] TrainScheduleQuery query)
         {
             return await SearchUsingEfAsync(query, _ => _.
-                Include(_ => _.Train));
+                Include(_ => _.Train).
+                Include(_ => _.SeatTariff));
         }
 
         /// <summary>
@@ -75,7 +76,8 @@ namespace Ticketing.Controllers
         public override async Task<TrainScheduleDto> FindAsync([FromRoute] long key)
         {
             return await FindUsingEfAsync(key, _ => _.
-                Include(_ => _.Train));
+                Include(_ => _.Train).
+                Include(_ => _.SeatTariff));
         }
 
     }

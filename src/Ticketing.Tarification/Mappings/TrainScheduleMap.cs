@@ -63,8 +63,10 @@ namespace Ticketing.Tarifications.Mappings
             }
             if (options.MapObjects)
             {
-                result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
-                result.SeatTariff = mapContext.SeatTariffMap.ReverseMap(source.SeatTariff, options);
+                if (source.TrainId == null)
+                    result.Train = mapContext.TrainMap.ReverseMap(source.Train, options);
+                if (source.SeatTariffId == null)
+                    result.SeatTariff = mapContext.SeatTariffMap.ReverseMap(source.SeatTariff, options);
             }
             if (options.MapCollections)
             {

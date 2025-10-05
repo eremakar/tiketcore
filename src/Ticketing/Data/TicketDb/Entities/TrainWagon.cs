@@ -1,5 +1,4 @@
 ﻿using Data.Repository;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ticketing.Data.TicketDb.Entities
 {
@@ -14,9 +13,6 @@ namespace Ticketing.Data.TicketDb.Entities
         public long? WagonId { get; set; }
 
         public TrainSchedule? TrainSchedule { get; set; }
-        public Wagon? Wagon { get; set; }
-
-        [InverseProperty("Wagon")]
-        public List<Seat>? Seats { get; set; }
+        public WagonModel? Wagon { get; set; }
     }
 }

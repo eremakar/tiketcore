@@ -69,8 +69,10 @@ namespace Ticketing.Tarifications.Mappings
             }
             if (options.MapObjects)
             {
-                result.Station = mapContext.StationMap.ReverseMap(source.Station, options);
-                result.Route = mapContext.RouteMap.ReverseMap(source.Route, options);
+                if (source.StationId == null)
+                    result.Station = mapContext.StationMap.ReverseMap(source.Station, options);
+                if (source.RouteId == null)
+                    result.Route = mapContext.RouteMap.ReverseMap(source.Route, options);
             }
             if (options.MapCollections)
             {

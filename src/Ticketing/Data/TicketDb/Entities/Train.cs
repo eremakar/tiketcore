@@ -1,4 +1,5 @@
 ﻿using Data.Repository;
+using Ticketing.Data.TicketDb.Entities.Tarifications;
 
 namespace Ticketing.Data.TicketDb.Entities
 {
@@ -21,10 +22,12 @@ namespace Ticketing.Data.TicketDb.Entities
         public long? ToId { get; set; }
         public long? RouteId { get; set; }
         public long? PlanId { get; set; }
+        public long? CategoryId { get; set; }
 
         public Station? From { get; set; }
         public Station? To { get; set; }
         public Route? Route { get; set; }
         public TrainWagonsPlan? Plan { get; set; }
+        public TrainCategory? Category { get; set; }
     }
 }
