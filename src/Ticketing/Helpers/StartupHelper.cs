@@ -1,4 +1,5 @@
 ﻿using Ticketing.Mappings;
+using Ticketing.Mappings.Dictionaries;
 using Ticketing.Mappings.Tarifications;
 using Ticketing.Mappings.Workflows;
 using Ticketing.Services;
@@ -32,6 +33,7 @@ namespace Ticketing.Helpers
             services.AddScoped<WagonFeatureMap>();
             services.AddScoped<WagonModelFeatureMap>();
             services.AddScoped<CarrierMap>();
+            services.AddScoped<FilialMap>();
             services.AddScoped<ServiceMap>();
             services.AddScoped<SeatTypeMap>();
             services.AddScoped<SeatPurposeMap>();
@@ -39,6 +41,8 @@ namespace Ticketing.Helpers
             services.AddScoped<SeatSegmentMap>();
             services.AddScoped<SeatCountSegmentMap>();
             services.AddScoped<SeatCountReservationMap>();
+            services.AddScoped<PeriodicityMap>();
+            services.AddScoped<TrainTypeMap>();
             services.AddScoped<ConnectionMap>();
             services.AddScoped<SeatReservationMap>();
             services.AddScoped<TicketMap>();

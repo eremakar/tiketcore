@@ -11,6 +11,8 @@ namespace Ticketing.Models.Queries.Carriers
         public SortOperand? Id { get; set; }
         public SortOperand? Name { get; set; }
         public SortOperand? BIN { get; set; }
+        public SortOperand? Description { get; set; }
+        public SortOperand? Filial { get; set; }
         public SortOperand? Logo { get; set; }
     }
 }

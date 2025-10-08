@@ -5,6 +5,6 @@
         Undefined = 0,
         conductor = 1,
         passenger = 2,
-        disabled = 3
+        seatsForDisabledPassengers = 3
     }
 }

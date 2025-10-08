@@ -48,6 +48,12 @@ namespace Ticketing.Migrations
                     b.Property<string>("BIN")
                         .HasColumnType("text");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Filial")
+                        .HasColumnType("text");
+
                     b.Property<string>("Logo")
                         .HasColumnType("jsonb");
 
@@ -107,6 +113,63 @@ namespace Ticketing.Migrations
                     b.HasIndex("StationId");
 
                     b.ToTable("Depots");
+                });
+
+            modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.Dictionaries.Periodicity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Periodicities");
+                });
+
+            modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.Dictionaries.TrainType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TrainTypes");
+                });
+
+            modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.Filial", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Filials");
                 });
 
             modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.Railway", b =>
@@ -1104,14 +1167,23 @@ namespace Ticketing.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<int>("Amenities")
+                        .HasColumnType("integer");
+
                     b.Property<long?>("CategoryId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("FromId")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("Importance")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
+
+                    b.Property<long?>("PeriodicityId")
+                        .HasColumnType("bigint");
 
                     b.Property<long?>("PlanId")
                         .HasColumnType("bigint");
@@ -1122,8 +1194,8 @@ namespace Ticketing.Migrations
                     b.Property<long?>("ToId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
+                    b.Property<long?>("TypeId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("ZoneType")
                         .HasColumnType("integer");
@@ -1134,11 +1206,15 @@ namespace Ticketing.Migrations
 
                     b.HasIndex("FromId");
 
+                    b.HasIndex("PeriodicityId");
+
                     b.HasIndex("PlanId");
 
                     b.HasIndex("RouteId");
 
                     b.HasIndex("ToId");
+
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Trains");
                 });
@@ -1365,6 +1441,12 @@ namespace Ticketing.Migrations
 
                     b.Property<long?>("ClassId")
                         .HasColumnType("bigint");
+
+                    b.Property<bool>("HasLiftingMechanism")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ManufacturerName")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -2080,6 +2162,10 @@ namespace Ticketing.Migrations
                         .WithMany()
                         .HasForeignKey("FromId");
 
+                    b.HasOne("Ticketing.Data.TicketDb.Entities.Dictionaries.Periodicity", "Periodicity")
+                        .WithMany()
+                        .HasForeignKey("PeriodicityId");
+
                     b.HasOne("Ticketing.Data.TicketDb.Entities.TrainWagonsPlan", "Plan")
                         .WithMany()
                         .HasForeignKey("PlanId");
@@ -2092,15 +2178,23 @@ namespace Ticketing.Migrations
                         .WithMany()
                         .HasForeignKey("ToId");
 
+                    b.HasOne("Ticketing.Data.TicketDb.Entities.Dictionaries.TrainType", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId");
+
                     b.Navigation("Category");
 
                     b.Navigation("From");
+
+                    b.Navigation("Periodicity");
 
                     b.Navigation("Plan");
 
                     b.Navigation("Route");
 
                     b.Navigation("To");
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Ticketing.Data.TicketDb.Entities.TrainSchedule", b =>

@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Ticketing.Controllers
 {
     /// <summary>
-    /// Поезд
+    /// Поезд по маршруту
     /// </summary>
     [Route("/api/v1/trains")]
     [ApiController]
@@ -51,9 +51,11 @@ namespace Ticketing.Controllers
         public override async Task<PagedList<TrainDto>> SearchAsync([FromBody] TrainQuery query)
         {
             return await SearchUsingEfAsync(query, _ => _.
+                Include(_ => _.Type).
                 Include(_ => _.From).
                 Include(_ => _.To).
                 Include(_ => _.Route).
+                Include(_ => _.Periodicity).
                 Include(_ => _.Plan).
                 Include(_ => _.Category));
         }
@@ -74,9 +76,11 @@ namespace Ticketing.Controllers
         public override async Task<TrainDto> FindAsync([FromRoute] long key)
         {
             return await FindUsingEfAsync(key, _ => _.
+                Include(_ => _.Type).
                 Include(_ => _.From).
                 Include(_ => _.To).
                 Include(_ => _.Route).
+                Include(_ => _.Periodicity).
                 Include(_ => _.Plan).
                 Include(_ => _.Category));
         }

@@ -1,0 +1,72 @@
+﻿[
+    {
+        "Id" : "1",
+        "Name" : "ежедневно",
+        "Code" : "daily"
+    },
+    {
+        "Id" : "2",
+        "Name" : "через день",
+        "Code" : "everyOtherDay"
+    },
+    {
+        "Id" : "3",
+        "Name" : "1 раз в неделю",
+        "Code" : "oncePerWeek"
+    },
+    {
+        "Id" : "4",
+        "Name" : "2 раза в неделю",
+        "Code" : "twicePerWeek"
+    },
+    {
+        "Id" : "5",
+        "Name" : "3 раза в неделю",
+        "Code" : "thricePerWeek"
+    },
+    {
+        "Id" : "6",
+        "Name" : "4 раза в неделю",
+        "Code" : "fourTimesPerWeek"
+    },
+    {
+        "Id" : "7",
+        "Name" : "5 раза в неделю (кроме вт., ср.)",
+        "Code" : "fiveTimesPerWeekExceptTueWed"
+    },
+    {
+        "Id" : "8",
+        "Name" : "6 раза в неделю (кроме вт., ср.)",
+        "Code" : "sixTimesPerWeekExceptTueWed"
+    },
+    {
+        "Id" : "9",
+        "Name" : "1 раз в 8 дней",
+        "Code" : "oncePerEightDays"
+    },
+    {
+        "Id" : "10",
+        "Name" : "по четным (кроме суб., вск. и праздников)",
+        "Code" : "evenDaysExceptWeekendsHolidays"
+    },
+    {
+        "Id" : "11",
+        "Name" : "по нечетным",
+        "Code" : "oddDays"
+    },
+    {
+        "Id" : "12",
+        "Name" : "по дням недели (вт., ср., пят., суб., вск.)",
+        "Code" : "tuWedFriSatSun"
+    },
+    {
+        "Id" : "13",
+        "Name" : "суб., вск. и праздничные дни",
+        "Code" : "weekendsAndHolidays"
+    },
+    {
+        "Id" : "14",
+        "Name" : "по датам",
+        "Code" : "byDates"
+    }
+]

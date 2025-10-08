@@ -12,6 +12,14 @@ namespace Ticketing.Models.Queries.WagonModels
         public FilterOperand<string>? Name { get; set; }
         public FilterOperand<int>? SeatCount { get; set; }
         public FilterOperand<object>? PictureS3 { get; set; }
+        /// <summary>
+        /// Наличие подъемного механизма
+        /// </summary>
+        public FilterOperand<bool>? HasLiftingMechanism { get; set; }
+        /// <summary>
+        /// Завод изготовитель
+        /// </summary>
+        public FilterOperand<string>? ManufacturerName { get; set; }
         public FilterOperand<long?>? ClassId { get; set; }
         public FilterOperand<long?>? TypeId { get; set; }
     }

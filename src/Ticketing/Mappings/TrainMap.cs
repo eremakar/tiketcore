@@ -5,7 +5,7 @@ using Ticketing.Models.Dtos;
 namespace Ticketing.Mappings
 {
     /// <summary>
-    /// Поезд
+    /// Поезд по маршруту
     /// </summary>
     public partial class TrainMap : MapBase2<Train, TrainDto, MapOptions>
     {
@@ -28,19 +28,24 @@ namespace Ticketing.Mappings
             if (options.MapProperties)
             {
                 result.Name = source.Name;
-                result.Type = source.Type;
                 result.ZoneType = source.ZoneType;
+                result.Importance = source.Importance;
+                result.Amenities = source.Amenities;
+                result.TypeId = source.TypeId;
                 result.FromId = source.FromId;
                 result.ToId = source.ToId;
                 result.RouteId = source.RouteId;
+                result.PeriodicityId = source.PeriodicityId;
                 result.PlanId = source.PlanId;
                 result.CategoryId = source.CategoryId;
             }
             if (options.MapObjects)
             {
+                result.Type = mapContext.TrainTypeMap.Map(source.Type, options);
                 result.From = mapContext.StationMap.Map(source.From, options);
                 result.To = mapContext.StationMap.Map(source.To, options);
                 result.Route = mapContext.RouteMap.Map(source.Route, options);
+                result.Periodicity = mapContext.PeriodicityMap.Map(source.Periodicity, options);
                 result.Plan = mapContext.TrainWagonsPlanMap.Map(source.Plan, options);
                 result.Category = mapContext.TrainCategoryMap.Map(source.Category, options);
             }
@@ -63,22 +68,29 @@ namespace Ticketing.Mappings
             if (options.MapProperties)
             {
                 result.Name = source.Name;
-                result.Type = source.Type;
                 result.ZoneType = source.ZoneType;
+                result.Importance = source.Importance;
+                result.Amenities = source.Amenities;
+                result.TypeId = source.TypeId;
                 result.FromId = source.FromId;
                 result.ToId = source.ToId;
                 result.RouteId = source.RouteId;
+                result.PeriodicityId = source.PeriodicityId;
                 result.PlanId = source.PlanId;
                 result.CategoryId = source.CategoryId;
             }
             if (options.MapObjects)
             {
+                if (source.TypeId == null)
+                    result.Type = mapContext.TrainTypeMap.ReverseMap(source.Type, options);
                 if (source.FromId == null)
                     result.From = mapContext.StationMap.ReverseMap(source.From, options);
                 if (source.ToId == null)
                     result.To = mapContext.StationMap.ReverseMap(source.To, options);
                 if (source.RouteId == null)
                     result.Route = mapContext.RouteMap.ReverseMap(source.Route, options);
+                if (source.PeriodicityId == null)
+                    result.Periodicity = mapContext.PeriodicityMap.ReverseMap(source.Periodicity, options);
                 if (source.PlanId == null)
                     result.Plan = mapContext.TrainWagonsPlanMap.ReverseMap(source.Plan, options);
                 if (source.CategoryId == null)
@@ -102,11 +114,14 @@ namespace Ticketing.Mappings
             if (options.MapProperties)
             {
                 destination.Name = source.Name;
-                destination.Type = source.Type;
                 destination.ZoneType = source.ZoneType;
+                destination.Importance = source.Importance;
+                destination.Amenities = source.Amenities;
+                destination.TypeId = source.TypeId;
                 destination.FromId = source.FromId;
                 destination.ToId = source.ToId;
                 destination.RouteId = source.RouteId;
+                destination.PeriodicityId = source.PeriodicityId;
                 destination.PlanId = source.PlanId;
                 destination.CategoryId = source.CategoryId;
             }

@@ -8,6 +8,13 @@
         bioToilet = 3,
         airConditioner = 4,
         mediaService = 5,
-        internetAccess = 6
+        internetAccess = 6,
+        noAirConditioner = 7,
+        openSpace = 8,
+        dispenser = 9,
+        fourBerthCompartment = 10,
+        twoBerthCompartment = 11,
+        compartmentSocket = 12,
+        compartmentSink = 13
     }
 }

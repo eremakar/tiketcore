@@ -58,8 +58,8 @@ namespace Ticketing.Controllers
         public override async Task<PagedList<SeatReservationDto>> SearchAsync([FromBody] SeatReservationQuery query)
         {
             return await SearchUsingEfAsync(query, _ => _.
-                Include(_ => _.From).
-                Include(_ => _.To).
+                Include(_ => _.From).ThenInclude(_ => _.Station).
+                Include(_ => _.To).ThenInclude(_ => _.Station).
                 Include(_ => _.Train).
                 Include(_ => _.Wagon).
                 Include(_ => _.Seat).
@@ -83,8 +83,8 @@ namespace Ticketing.Controllers
         public override async Task<SeatReservationDto> FindAsync([FromRoute] long key)
         {
             return await FindUsingEfAsync(key, _ => _.
-                Include(_ => _.From).
-                Include(_ => _.To).
+                Include(_ => _.From).ThenInclude(_ => _.Station).
+                Include(_ => _.To).ThenInclude(_ => _.Station).
                 Include(_ => _.Train).
                 Include(_ => _.Wagon).
                 Include(_ => _.Seat).

@@ -12,6 +12,6 @@
     {
         "Id" : "3",
         "Name" : "Место для инвалидов",
-        "Code" : "disabled"
+        "Code" : "seatsForDisabledPassengers"
     }
 ]

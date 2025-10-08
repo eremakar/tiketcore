@@ -15,6 +15,14 @@ namespace Ticketing.Data.TicketDb.Entities
         public int SeatCount { get; set; }
         [Column(TypeName = "jsonb")]
         public string? PictureS3 { get; set; }
+        /// <summary>
+        /// Наличие подъемного механизма
+        /// </summary>
+        public bool HasLiftingMechanism { get; set; }
+        /// <summary>
+        /// Завод изготовитель
+        /// </summary>
+        public string? ManufacturerName { get; set; }
         public long? ClassId { get; set; }
         public long? TypeId { get; set; }
 

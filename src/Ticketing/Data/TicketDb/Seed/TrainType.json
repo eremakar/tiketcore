@@ -1,0 +1,32 @@
+﻿[
+    {
+        "Id" : "1",
+        "Name" : "Тальго",
+        "Code" : "talgo"
+    },
+    {
+        "Id" : "2",
+        "Name" : "Стандартные",
+        "Code" : "standard"
+    },
+    {
+        "Id" : "3",
+        "Name" : "Пригородные",
+        "Code" : "suburban"
+    },
+    {
+        "Id" : "4",
+        "Name" : "Прицепные",
+        "Code" : "attached"
+    },
+    {
+        "Id" : "5",
+        "Name" : "Беспересадочные вагоны",
+        "Code" : "throughCarriage"
+    },
+    {
+        "Id" : "6",
+        "Name" : "Частные перевозчики",
+        "Code" : "privateCarriers"
+    }
+]

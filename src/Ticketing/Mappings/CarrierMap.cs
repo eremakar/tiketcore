@@ -31,6 +31,8 @@ namespace Ticketing.Mappings
             {
                 result.Name = source.Name;
                 result.BIN = source.BIN;
+                result.Description = source.Description;
+                result.Filial = source.Filial;
                 result.Logo = source.Logo;
             }
             if (options.MapObjects)
@@ -56,6 +58,8 @@ namespace Ticketing.Mappings
             {
                 result.Name = source.Name;
                 result.BIN = source.BIN;
+                result.Description = source.Description;
+                result.Filial = source.Filial;
                 if (source.Logo != null)
                     result.Logo = JsonConvert.SerializeObject(source.Logo);
             }
@@ -81,6 +85,8 @@ namespace Ticketing.Mappings
             {
                 destination.Name = source.Name;
                 destination.BIN = source.BIN;
+                destination.Description = source.Description;
+                destination.Filial = source.Filial;
                 destination.Logo = JsonHelper.NormalizeSafe(source.Logo);
             }
             if (options.MapObjects)

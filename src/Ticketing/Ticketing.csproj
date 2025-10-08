@@ -25,6 +25,9 @@
 	<EmbeddedResource Include="Data\TicketDb\Seed\Service.json" />
 	<EmbeddedResource Include="Data\TicketDb\Seed\WagonType.json" />
 	<EmbeddedResource Include="Data\TicketDb\Seed\WagonFeature.json" />
+	<EmbeddedResource Include="Data\TicketDb\Seed\SeatPurpose.json" />
+	  <EmbeddedResource Include="Data\TicketDb\Seed\TrainType.json" />
+	  <EmbeddedResource Include="Data\TicketDb\Seed\Periodicity.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />

@@ -1,5 +1,6 @@
 ﻿using Data.Repository;
 using Data.Repository.Dapper;
+using Data.Repository.Helpers;
 using Ticketing.Data.TicketDb.DatabaseContext;
 using Ticketing.Data.TicketDb.Entities;
 using Ticketing.Mappings;
@@ -52,6 +53,52 @@ namespace Ticketing.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public override async Task<object> UpdateAsync([FromBody] WagonModelDto request)
         {
+            // Load the original entity with Features and Seats
+            var original = await db.WagonModels
+                .Include(wm => wm.Features)
+                .Include(wm => wm.Seats)
+                .FirstOrDefaultAsync(wm => wm.Id == request.Id);
+
+            if (original == null)
+                return false;
+
+            // Sync Features collection
+            await ListHelper.SyncCollectionAsync(
+                original.Features,
+                request.Features,
+                db.WagonModelFeatures,
+                obj => obj is WagonModelFeature entity ? entity.Id : ((WagonModelFeatureDto)obj).Id,
+                dto =>
+                {
+                    var newFeature = wagonModelFeatureMap.ReverseMap(dto);
+                    newFeature.WagonId = request.Id;
+                    return newFeature;
+                },
+                (dto, existing) =>
+                {
+                    var sourceFeature = wagonModelFeatureMap.ReverseMap(dto);
+                    wagonModelFeatureMap.Map(sourceFeature, existing);
+                });
+
+            // Sync Seats collection
+            await ListHelper.SyncCollectionAsync(
+                original.Seats,
+                request.Seats,
+                db.Seats,
+                obj => obj is Seat entity ? entity.Id : ((SeatDto)obj).Id,
+                dto =>
+                {
+                    var newSeat = seatMap.ReverseMap(dto);
+                    newSeat.WagonId = request.Id;
+                    return newSeat;
+                },
+                (dto, existing) =>
+                {
+                    var sourceSeat = seatMap.ReverseMap(dto);
+                    seatMap.Map(sourceSeat, existing);
+                });
+
+            // Update the main entity using base logic
             return await base.UpdateAsync(request);
         }
 
@@ -117,10 +164,10 @@ namespace Ticketing.Controllers
                 var generatedSeatsCount = await wagonModelsService.GenerateSeatsAsync(key);
                 
                 // Get additional info for response
-                var wagonModel = await db.Set<WagonModel>()
+                var wagonModel = await db.WagonModels
                     .FirstOrDefaultAsync(wm => wm.Id == key);
                 
-                var existingSeats = await db.Set<Seat>()
+                var existingSeats = await db.Seats
                     .Where(s => s.WagonId == key)
                     .ToListAsync();
 

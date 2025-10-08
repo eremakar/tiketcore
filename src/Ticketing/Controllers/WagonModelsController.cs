@@ -25,12 +25,16 @@ namespace Ticketing.Controllers
     {
         protected TicketDbContext db;
         private readonly WagonModelsService wagonModelsService;
+        private readonly WagonModelFeatureMap wagonModelFeatureMap;
+        private readonly SeatMap seatMap;
 
         public WagonModelsController(ILogger<RestServiceBase<WagonModel, long>> logger,
             IDapperDbContext restDapperDb,
             TicketDbContext restDb,
             WagonModelMap wagonModelMap,
-            WagonModelsService wagonModelsService)
+            WagonModelsService wagonModelsService,
+            WagonModelFeatureMap wagonModelFeatureMap,
+            SeatMap seatMap)
             : base(logger,
                 restDapperDb,
                 restDb,
@@ -39,6 +43,8 @@ namespace Ticketing.Controllers
         {
             db = restDb;
             this.wagonModelsService = wagonModelsService;
+            this.wagonModelFeatureMap = wagonModelFeatureMap;
+            this.seatMap = seatMap;
         }
 
         /// <summary>

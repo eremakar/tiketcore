@@ -21,6 +21,8 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
                     context.AddSeedFromJson(context.Services, dbAssembly, "Service", _ => _.Id, null, null, "Data.TicketDb");
                     context.AddSeedFromJson(context.SeatTypes, dbAssembly, "SeatType", _ => _.Id, null, null, "Data.TicketDb");
                     context.AddSeedFromJson(context.SeatPurposes, dbAssembly, "SeatPurpose", _ => _.Id, null, null, "Data.TicketDb");
+                    context.AddSeedFromJson(context.Periodicities, dbAssembly, "Periodicity", _ => _.Id, null, null, "Data.TicketDb");
+                    context.AddSeedFromJson(context.TrainTypes, dbAssembly, "TrainType", _ => _.Id, null, null, "Data.TicketDb");
                     context.AddSeedFromJson(context.TicketStates, dbAssembly, "TicketState", _ => _.Id, null, null, "Data.TicketDb");
                     context.AddSeedFromJson(context.TrainCategories, dbAssembly, "TrainCategory", _ => _.Id, null, null, "Data.TicketDb");
                     context.AddSeedFromJson(context.WagonClasses, dbAssembly, "WagonClass", _ => _.Id, (a, b) => a.Name = b.Name, null, "Data.TicketDb");

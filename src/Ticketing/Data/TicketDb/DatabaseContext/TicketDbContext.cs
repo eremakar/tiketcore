@@ -1,5 +1,6 @@
 ﻿using Data.Repository;
 using Ticketing.Data.TicketDb.Entities;
+using Ticketing.Data.TicketDb.Entities.Dictionaries;
 using Ticketing.Data.TicketDb.Entities.Tarifications;
 using Ticketing.Data.TicketDb.Entities.Workflows;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         public DbSet<WagonFeature>? WagonFeatures { get; set; }
         public DbSet<WagonModelFeature>? WagonModelFeatures { get; set; }
         public DbSet<Carrier>? Carriers { get; set; }
+        public DbSet<Filial>? Filials { get; set; }
         public DbSet<Service>? Services { get; set; }
         public DbSet<SeatType>? SeatTypes { get; set; }
         public DbSet<SeatPurpose>? SeatPurposes { get; set; }
@@ -34,6 +36,8 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         public DbSet<SeatSegment>? SeatSegments { get; set; }
         public DbSet<SeatCountSegment>? SeatCountSegments { get; set; }
         public DbSet<SeatCountReservation>? SeatCountReservations { get; set; }
+        public DbSet<Periodicity>? Periodicities { get; set; }
+        public DbSet<TrainType>? TrainTypes { get; set; }
         public DbSet<Connection>? Connections { get; set; }
         public DbSet<SeatReservation>? SeatReservations { get; set; }
         public DbSet<Ticket>? Tickets { get; set; }
@@ -82,6 +86,7 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
             modelBuilder.ApplyConfiguration(new WagonFeaturesConfiguration());
             modelBuilder.ApplyConfiguration(new WagonModelFeaturesConfiguration());
             modelBuilder.ApplyConfiguration(new CarriersConfiguration { IsInMemoryDb = this.IsInMemoryDb() });
+            modelBuilder.ApplyConfiguration(new FilialsConfiguration());
             modelBuilder.ApplyConfiguration(new ServicesConfiguration());
             modelBuilder.ApplyConfiguration(new SeatTypesConfiguration());
             modelBuilder.ApplyConfiguration(new SeatPurposesConfiguration());
@@ -89,6 +94,8 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
             modelBuilder.ApplyConfiguration(new SeatSegmentsConfiguration());
             modelBuilder.ApplyConfiguration(new SeatCountSegmentsConfiguration { IsInMemoryDb = this.IsInMemoryDb() });
             modelBuilder.ApplyConfiguration(new SeatCountReservationsConfiguration());
+            modelBuilder.ApplyConfiguration(new PeriodicitiesConfiguration());
+            modelBuilder.ApplyConfiguration(new TrainTypesConfiguration());
             modelBuilder.ApplyConfiguration(new ConnectionsConfiguration());
             modelBuilder.ApplyConfiguration(new SeatReservationsConfiguration());
             modelBuilder.ApplyConfiguration(new TicketsConfiguration());

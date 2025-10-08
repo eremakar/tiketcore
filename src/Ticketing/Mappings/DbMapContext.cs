@@ -1,4 +1,5 @@
-﻿using Ticketing.Mappings.Tarifications;
+﻿using Ticketing.Mappings.Dictionaries;
+using Ticketing.Mappings.Tarifications;
 using Ticketing.Mappings.Workflows;
 
 namespace Ticketing.Mappings
@@ -24,6 +25,7 @@ namespace Ticketing.Mappings
         public WagonFeatureMap WagonFeatureMap { get; }
         public WagonModelFeatureMap WagonModelFeatureMap { get; }
         public CarrierMap CarrierMap { get; }
+        public FilialMap FilialMap { get; }
         public ServiceMap ServiceMap { get; }
         public SeatTypeMap SeatTypeMap { get; }
         public SeatPurposeMap SeatPurposeMap { get; }
@@ -31,6 +33,8 @@ namespace Ticketing.Mappings
         public SeatSegmentMap SeatSegmentMap { get; }
         public SeatCountSegmentMap SeatCountSegmentMap { get; }
         public SeatCountReservationMap SeatCountReservationMap { get; }
+        public PeriodicityMap PeriodicityMap { get; }
+        public TrainTypeMap TrainTypeMap { get; }
         public ConnectionMap ConnectionMap { get; }
         public SeatReservationMap SeatReservationMap { get; }
         public TicketMap TicketMap { get; }
@@ -74,6 +78,7 @@ namespace Ticketing.Mappings
             WagonFeatureMap = new WagonFeatureMap(this);
             WagonModelFeatureMap = new WagonModelFeatureMap(this);
             CarrierMap = new CarrierMap(this);
+            FilialMap = new FilialMap(this);
             ServiceMap = new ServiceMap(this);
             SeatTypeMap = new SeatTypeMap(this);
             SeatPurposeMap = new SeatPurposeMap(this);
@@ -81,6 +86,8 @@ namespace Ticketing.Mappings
             SeatSegmentMap = new SeatSegmentMap(this);
             SeatCountSegmentMap = new SeatCountSegmentMap(this);
             SeatCountReservationMap = new SeatCountReservationMap(this);
+            PeriodicityMap = new PeriodicityMap(this);
+            TrainTypeMap = new TrainTypeMap(this);
             ConnectionMap = new ConnectionMap(this);
             SeatReservationMap = new SeatReservationMap(this);
             TicketMap = new TicketMap(this);

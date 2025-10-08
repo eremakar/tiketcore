@@ -28,5 +28,40 @@
         "Id" : "6",
         "Name" : "Доступ в интернет",
         "Code" : "internetAccess"
+    },
+    {
+        "Id" : "7",
+        "Name" : "Без кондиционера",
+        "Code" : "noAirConditioner"
+    },
+    {
+        "Id" : "8",
+        "Name" : "Места в общем вагоне",
+        "Code" : "openSpace"
+    },
+    {
+        "Id" : "9",
+        "Name" : "Диспенсер",
+        "Code" : "dispenser"
+    },
+    {
+        "Id" : "10",
+        "Name" : "4 места в купе",
+        "Code" : "fourBerthCompartment"
+    },
+    {
+        "Id" : "11",
+        "Name" : "2 места в купе",
+        "Code" : "twoBerthCompartment"
+    },
+    {
+        "Id" : "12",
+        "Name" : "Розетка в купе",
+        "Code" : "compartmentSocket"
+    },
+    {
+        "Id" : "13",
+        "Name" : "Умывальник в купе",
+        "Code" : "compartmentSink"
     }
 ]

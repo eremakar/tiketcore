@@ -1,4 +1,5 @@
 ﻿using Ticketing.Data.TicketDb.Entities;
+using Ticketing.Data.TicketDb.Entities.Dictionaries;
 using Ticketing.Data.TicketDb.Entities.Tarifications;
 using Ticketing.Data.TicketDb.Entities.Workflows;
 using Microsoft.EntityFrameworkCore;
@@ -210,6 +211,14 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
         }
     }
 
+    public class FilialsConfiguration : IEntityTypeConfiguration<Filial>
+    {
+        public void Configure(EntityTypeBuilder<Filial> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
     public class ServicesConfiguration : IEntityTypeConfiguration<Service>
     {
         public void Configure(EntityTypeBuilder<Service> builder)
@@ -272,6 +281,22 @@ namespace Ticketing.Data.TicketDb.DatabaseContext
     public class SeatCountReservationsConfiguration : IEntityTypeConfiguration<SeatCountReservation>
     {
         public void Configure(EntityTypeBuilder<SeatCountReservation> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class PeriodicitiesConfiguration : IEntityTypeConfiguration<Periodicity>
+    {
+        public void Configure(EntityTypeBuilder<Periodicity> builder)
+        {
+            builder.HasKey(x => x.Id);
+        }
+    }
+
+    public class TrainTypesConfiguration : IEntityTypeConfiguration<TrainType>
+    {
+        public void Configure(EntityTypeBuilder<TrainType> builder)
         {
             builder.HasKey(x => x.Id);
         }

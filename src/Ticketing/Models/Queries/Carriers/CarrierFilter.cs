@@ -11,6 +11,8 @@ namespace Ticketing.Models.Queries.Carriers
         public FilterOperand<long>? Id { get; set; }
         public FilterOperand<string>? Name { get; set; }
         public FilterOperand<string>? BIN { get; set; }
+        public FilterOperand<string>? Description { get; set; }
+        public FilterOperand<string>? Filial { get; set; }
         public FilterOperand<object>? Logo { get; set; }
     }
 }

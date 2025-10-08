@@ -12,6 +12,8 @@ namespace Ticketing.Data.TicketDb.Entities
         public long Id { get; set; }
         public string? Name { get; set; }
         public string? BIN { get; set; }
+        public string? Description { get; set; }
+        public string? Filial { get; set; }
         [Column(TypeName = "jsonb")]
         public string? Logo { get; set; }
     }
