@@ -1,0 +1,92 @@
+﻿[
+    {
+        "Id" : 1,
+        "Name" : "1Э",
+        "Code" : "1e",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 2,
+        "Name" : "1Б",
+        "Code" : "1b",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 3,
+        "Name" : "2Б",
+        "Code" : "2b",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 4,
+        "Name" : "2Д",
+        "Code" : "2d",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 5,
+        "Name" : "2С",
+        "Code" : "2c",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 6,
+        "Name" : "2К",
+        "Code" : "2k",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 7,
+        "Name" : "2У",
+        "Code" : "2u",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 8,
+        "Name" : "2Л",
+        "Code" : "2l",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 9,
+        "Name" : "2Н",
+        "Code" : "2n",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 10,
+        "Name" : "3П",
+        "Code" : "3p",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 11,
+        "Name" : "3Д",
+        "Code" : "3d",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 12,
+        "Name" : "3Л",
+        "Code" : "3l",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 13,
+        "Name" : "3М",
+        "Code" : "3m",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 14,
+        "Name" : "3Я",
+        "Code" : "3y",
+        "TarifCoefficient" : 1.0
+    },
+    {
+        "Id" : 15,
+        "Name" : "3О",
+        "Code" : "3o",
+        "TarifCoefficient" : 1.0
+    }
+]

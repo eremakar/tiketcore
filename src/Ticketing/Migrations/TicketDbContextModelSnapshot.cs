@@ -280,6 +280,9 @@ namespace Ticketing.Migrations
                     b.Property<DateTime?>("Arrival")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Day")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("Departure")
                         .HasColumnType("timestamp with time zone");
 

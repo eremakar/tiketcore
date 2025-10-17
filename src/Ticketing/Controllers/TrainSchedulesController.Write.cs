@@ -91,6 +91,30 @@ namespace Ticketing.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public override async Task<object> RemoveAsync([FromRoute] long key)
         {
+            // Remove related TrainWagons and SeatSegments first
+            var trainWagons = await restDb.Set<TrainWagon>()
+                .Where(tw => tw.TrainScheduleId == key)
+                .ToListAsync();
+
+            if (trainWagons.Any())
+            {
+                var trainWagonIds = trainWagons.Select(tw => tw.Id).ToList();
+
+                // Remove SeatSegments for these wagons
+                var seatSegments = await restDb.Set<SeatSegment>()
+                    .Where(ss => ss.TrainScheduleId == key)
+                    .ToListAsync();
+
+                if (seatSegments.Any())
+                {
+                    restDb.Set<SeatSegment>().RemoveRange(seatSegments);
+                }
+
+                // Remove TrainWagons
+                restDb.Set<TrainWagon>().RemoveRange(trainWagons);
+                await restDb.SaveChangesAsync();
+            }
+
             return await base.RemoveAsync(key);
         }
 

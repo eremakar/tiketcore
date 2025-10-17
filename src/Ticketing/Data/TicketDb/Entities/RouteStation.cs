@@ -25,6 +25,10 @@ namespace Ticketing.Data.TicketDb.Entities
         /// </summary>
         public DateTime? Departure { get; set; }
         public double Distance { get; set; }
+        /// <summary>
+        /// Сутки
+        /// </summary>
+        public int Day { get; set; }
         public long? StationId { get; set; }
         public long? RouteId { get; set; }
 

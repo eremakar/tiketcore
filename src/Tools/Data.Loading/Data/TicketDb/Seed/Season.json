@@ -1,0 +1,22 @@
+﻿[
+    {
+        "Id" : "1",
+        "Name" : "Лето",
+        "Code" : "summer"
+    },
+    {
+        "Id" : "2",
+        "Name" : "Праздничные дни",
+        "Code" : "holidays"
+    },
+    {
+        "Id" : "3",
+        "Name" : "Осень",
+        "Code" : "autumn"
+    },
+    {
+        "Id" : "4",
+        "Name" : "Зима",
+        "Code" : "winter"
+    }
+]

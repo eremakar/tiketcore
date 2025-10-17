@@ -24,6 +24,10 @@ namespace Ticketing.Models.Dtos
         /// </summary>
         public DateTime? Departure { get; set; }
         public double Distance { get; set; }
+        /// <summary>
+        /// Сутки
+        /// </summary>
+        public int Day { get; set; }
         public long? StationId { get; set; }
         public long? RouteId { get; set; }
 

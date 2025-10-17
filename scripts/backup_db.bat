@@ -1,0 +1,3 @@
+"C:\Users\User\AppData\Local\Programs\pgAdmin 4\runtime\pg_dump.exe" --file "c:\\backups\\ktj2\\ticketcore_17102025_schema.bak" --dbname=postgresql://pguser:pguserpass@185.47.167.38:5432/ticketing_db --verbose --format=p --schema-only
+"C:\Users\User\AppData\Local\Programs\pgAdmin 4\runtime\pg_dump.exe" --file "c:\\backups\\ktj2\\ticketcore_17102025_sql.bak" --dbname=postgresql://pguser:pguserpass@185.47.167.38:5432/ticketing_db --verbose --format=p --section=data
+"C:\Users\User\AppData\Local\Programs\pgAdmin 4\runtime\pg_dump.exe" --file "c:\\backups\\ktj2\\ticketcore_17102025.bak" --dbname=postgresql://pguser:pguserpass@185.47.167.38:5432/ticketing_db --verbose --format=c --blobs --section=data

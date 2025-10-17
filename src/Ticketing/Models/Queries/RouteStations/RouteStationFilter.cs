@@ -26,6 +26,10 @@ namespace Ticketing.Models.Queries.RouteStations
         /// </summary>
         public FilterOperand<DateTime?>? Departure { get; set; }
         public FilterOperand<double>? Distance { get; set; }
+        /// <summary>
+        /// Сутки
+        /// </summary>
+        public FilterOperand<int>? Day { get; set; }
         public FilterOperand<long?>? StationId { get; set; }
         public FilterOperand<long?>? RouteId { get; set; }
     }

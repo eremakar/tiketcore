@@ -33,6 +33,7 @@ namespace Ticketing.Mappings
                 result.Stop = source.Stop;
                 result.Departure = source.Departure;
                 result.Distance = source.Distance;
+                result.Day = source.Day;
                 result.StationId = source.StationId;
                 result.RouteId = source.RouteId;
             }
@@ -64,6 +65,7 @@ namespace Ticketing.Mappings
                 result.Stop = source.Stop != null ? source.Stop.Value.ToUtc() : null;
                 result.Departure = source.Departure != null ? source.Departure.Value.ToUtc() : null;
                 result.Distance = source.Distance;
+                result.Day = source.Day;
                 result.StationId = source.StationId;
                 result.RouteId = source.RouteId;
             }
@@ -96,6 +98,7 @@ namespace Ticketing.Mappings
                 destination.Stop = source.Stop;
                 destination.Departure = source.Departure;
                 destination.Distance = source.Distance;
+                destination.Day = source.Day;
                 destination.StationId = source.StationId;
                 destination.RouteId = source.RouteId;
             }

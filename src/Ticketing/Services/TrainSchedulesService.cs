@@ -248,13 +248,6 @@ namespace Ticketing.Services
 						continue;
 					}
 
-					// Validate seats exist for all wagons before creating schedule
-					foreach (var planWagon in train.Plan.Wagons)
-					{
-						if (!seatsByWagonId.TryGetValue(planWagon.WagonId, out var seats) || seats.Count == 0)
-							throw new BadRequestException($"No seats found for wagon {planWagon.WagonId}. Cannot create schedule.");
-					}
-
 					// Use execution strategy for transaction
 					var strategy = db.Database.CreateExecutionStrategy();
 					await strategy.ExecuteAsync(async () =>
@@ -295,7 +288,16 @@ namespace Ticketing.Services
 							{
 								var planWagon = train.Plan.Wagons[i];
 								var trainWagon = trainWagonsToAdd[i];
-								var seats = seatsByWagonId[planWagon.WagonId];
+								
+								// Skip wagon if no seats found
+								if (!seatsByWagonId.TryGetValue(planWagon.WagonId, out var seats) || seats.Count == 0)
+								{
+									await workflowTaskService.LogAsync(
+										request.WorkflowTaskId,
+										$"Wagon {planWagon.Number} (WagonId: {planWagon.WagonId}) skipped - no seats found",
+										LogSeverity.Warning);
+									continue;
+								}
 
 								foreach (var seat in seats)
 								{
