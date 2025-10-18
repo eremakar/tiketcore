@@ -32,5 +32,6 @@ namespace Ticketing.Models.Queries.Trains
         public FilterOperand<long?>? PeriodicityId { get; set; }
         public FilterOperand<long?>? PlanId { get; set; }
         public FilterOperand<long?>? CategoryId { get; set; }
+        public FilterOperand<long?>? TariffId { get; set; }
     }
 }

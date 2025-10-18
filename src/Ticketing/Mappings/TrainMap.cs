@@ -38,6 +38,7 @@ namespace Ticketing.Mappings
                 result.PeriodicityId = source.PeriodicityId;
                 result.PlanId = source.PlanId;
                 result.CategoryId = source.CategoryId;
+                result.TariffId = source.TariffId;
             }
             if (options.MapObjects)
             {
@@ -48,6 +49,7 @@ namespace Ticketing.Mappings
                 result.Periodicity = mapContext.PeriodicityMap.Map(source.Periodicity, options);
                 result.Plan = mapContext.TrainWagonsPlanMap.Map(source.Plan, options);
                 result.Category = mapContext.TrainCategoryMap.Map(source.Category, options);
+                result.Tariff = mapContext.TariffMap.Map(source.Tariff, options);
             }
             if (options.MapCollections)
             {
@@ -78,6 +80,7 @@ namespace Ticketing.Mappings
                 result.PeriodicityId = source.PeriodicityId;
                 result.PlanId = source.PlanId;
                 result.CategoryId = source.CategoryId;
+                result.TariffId = source.TariffId;
             }
             if (options.MapObjects)
             {
@@ -95,6 +98,8 @@ namespace Ticketing.Mappings
                     result.Plan = mapContext.TrainWagonsPlanMap.ReverseMap(source.Plan, options);
                 if (source.CategoryId == null)
                     result.Category = mapContext.TrainCategoryMap.ReverseMap(source.Category, options);
+                if (source.TariffId == null)
+                    result.Tariff = mapContext.TariffMap.ReverseMap(source.Tariff, options);
             }
             if (options.MapCollections)
             {
@@ -124,6 +129,7 @@ namespace Ticketing.Mappings
                 destination.PeriodicityId = source.PeriodicityId;
                 destination.PlanId = source.PlanId;
                 destination.CategoryId = source.CategoryId;
+                destination.TariffId = source.TariffId;
             }
             if (options.MapObjects)
             {

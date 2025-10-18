@@ -515,5 +515,92 @@ public class DataFixService
             Console.WriteLine($"⚠ Ошибок: {errors}");
         }
     }
+
+    /// <summary>
+    /// Связывает поезда с их планами составов и маршрутами
+    /// </summary>
+    public async Task LinkTrainsToPlansByNameAsync()
+    {
+        Console.WriteLine("\n=== СВЯЗЫВАНИЕ ПОЕЗДОВ С ПЛАНАМИ СОСТАВОВ И МАРШРУТАМИ ===");
+
+        var trains = await dbContext.Trains!.ToListAsync();
+        var plans = await dbContext.TrainWagonsPlans!.ToListAsync();
+        var routes = await dbContext.Routes!.ToListAsync();
+
+        var updatedPlans = 0;
+        var updatedRoutes = 0;
+        var notFoundPlans = 0;
+        var notFoundRoutes = 0;
+        var errors = 0;
+
+        foreach (var train in trains)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(train.Name))
+                {
+                    Console.WriteLine($"⚠ Поезд ID={train.Id} не имеет имени");
+                    errors++;
+                    continue;
+                }
+
+                var hasChanges = false;
+
+                // Связываем с планом
+                var plan = plans.FirstOrDefault(p => p.TrainId == train.Id);
+
+                if (plan == null)
+                {
+                    Console.WriteLine($"  План не найден для поезда '{train.Name}' (ID={train.Id})");
+                    notFoundPlans++;
+                }
+                else if (train.PlanId != plan.Id)
+                {
+                    train.PlanId = plan.Id;
+                    Console.WriteLine($"  ✓ Связан с планом: поезд '{train.Name}' (ID={train.Id}) -> план (ID={plan.Id})");
+                    updatedPlans++;
+                    hasChanges = true;
+                }
+
+                // Связываем с маршрутом
+                var route = routes.FirstOrDefault(r => r.TrainId == train.Id);
+
+                if (route == null)
+                {
+                    Console.WriteLine($"  Маршрут не найден для поезда '{train.Name}' (ID={train.Id})");
+                    notFoundRoutes++;
+                }
+                else if (train.RouteId != route.Id)
+                {
+                    train.RouteId = route.Id;
+                    Console.WriteLine($"  ✓ Связан с маршрутом: поезд '{train.Name}' (ID={train.Id}) -> маршрут (ID={route.Id})");
+                    updatedRoutes++;
+                    hasChanges = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Ошибка при обработке поезда ID={train.Id}: {ex.Message}");
+                errors++;
+            }
+        }
+
+        await dbContext.SaveChangesAsync();
+
+        Console.WriteLine($"\n✓ Обновлено связей с планами: {updatedPlans}");
+        Console.WriteLine($"✓ Обновлено связей с маршрутами: {updatedRoutes}");
+        if (notFoundPlans > 0)
+        {
+            Console.WriteLine($"⚠ Планов не найдено: {notFoundPlans}");
+        }
+        if (notFoundRoutes > 0)
+        {
+            Console.WriteLine($"⚠ Маршрутов не найдено: {notFoundRoutes}");
+        }
+        if (errors > 0)
+        {
+            Console.WriteLine($"⚠ Ошибок: {errors}");
+        }
+    }
 }
 

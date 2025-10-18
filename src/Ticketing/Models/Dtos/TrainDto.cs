@@ -32,6 +32,7 @@ namespace Ticketing.Models.Dtos
         public long? PeriodicityId { get; set; }
         public long? PlanId { get; set; }
         public long? CategoryId { get; set; }
+        public long? TariffId { get; set; }
 
         /// <summary>
         /// Тип поезда, например Тальго
@@ -43,5 +44,6 @@ namespace Ticketing.Models.Dtos
         public PeriodicityDto? Periodicity { get; set; }
         public TrainWagonsPlanDto? Plan { get; set; }
         public TrainCategoryDto? Category { get; set; }
+        public TariffDto? Tariff { get; set; }
     }
 }

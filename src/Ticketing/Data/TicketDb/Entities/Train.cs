@@ -33,6 +33,7 @@ namespace Ticketing.Data.TicketDb.Entities
         public long? PeriodicityId { get; set; }
         public long? PlanId { get; set; }
         public long? CategoryId { get; set; }
+        public long? TariffId { get; set; }
 
         public TrainType? Type { get; set; }
         public Station? From { get; set; }
@@ -41,5 +42,6 @@ namespace Ticketing.Data.TicketDb.Entities
         public Periodicity? Periodicity { get; set; }
         public TrainWagonsPlan? Plan { get; set; }
         public TrainCategory? Category { get; set; }
+        public Tariff? Tariff { get; set; }
     }
 }

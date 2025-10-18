@@ -55,7 +55,7 @@ var schedulePath = "Расписания.xlsx";
 var scheduleCachePath = "schedule_cache.json";
 
 //// Загружаем и обрабатываем все данные
-var result = await trainsLoader.LoadAndProcessTrainsAsync(excelPath, wordDirectoryPath, dotPath);
+//var result = await trainsLoader.LoadAndProcessTrainsAsync(excelPath, wordDirectoryPath, dotPath);
 
 // Исправляем данные
 //await dataFixService.FixRouteNamesAsync();
@@ -64,7 +64,8 @@ var result = await trainsLoader.LoadAndProcessTrainsAsync(excelPath, wordDirecto
 //await dataFixService.DeleteRouteStationsWithNullStopAsync();
 //await dataFixService.DeleteInvalidWagonsAsync();
 //await dataFixService.RestoreFirstAndLastStationsAsync(result);
-await dataFixService.RestoreAllStationsTimesAsync(result);
+//await dataFixService.RestoreAllStationsTimesAsync(result);
+await dataFixService.LinkTrainsToPlansByNameAsync();
 
 
 // Сохраняем в БД
